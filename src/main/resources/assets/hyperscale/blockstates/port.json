@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "mode=input": {
+      "model": "hyperscale:block/port_input"
+    },
+    "mode=output": {
+      "model": "hyperscale:block/port_output"
+    }
+  }
+}

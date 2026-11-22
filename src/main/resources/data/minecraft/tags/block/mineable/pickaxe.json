@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "hyperscale:interface",
+    "hyperscale:port",
+    "hyperscale:switch",
+    "hyperscale:server_rack",
+    "hyperscale:drive_bay",
+    "hyperscale:recorder",
+    "hyperscale:recorder_input",
+    "hyperscale:recorder_output"
+  ]
+}

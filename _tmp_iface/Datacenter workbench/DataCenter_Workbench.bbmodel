@@ -1,0 +1,2365 @@
+{
+  "meta": {
+    "format_version": "4.10",
+    "model_format": "free",
+    "box_uv": false
+  },
+  "name": "DataCenter_Workbench",
+  "model_identifier": "datacenter_workbench",
+  "visible_box": [
+    2,
+    2,
+    1
+  ],
+  "variable_placeholders": "",
+  "variable_placeholder_buttons": [],
+  "timeline_setups": [],
+  "unhandled_root_fields": {},
+  "resolution": {
+    "width": 64,
+    "height": 64
+  },
+  "elements": [
+    {
+      "name": "Desk_Tabletop",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -8,
+        10,
+        1
+      ],
+      "to": [
+        24,
+        11.2,
+        15
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.0,
+        10.6,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            16,
+            0,
+            32,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "405b9888-bb1c-4def-afea-dd8dcb76d3fe"
+    },
+    {
+      "name": "Desk_Rear_Lip",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -8,
+        11.2,
+        13.8
+      ],
+      "to": [
+        24,
+        12.2,
+        15
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.0,
+        11.7,
+        14.4
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            56,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "e19f841e-e971-450a-a042-c37798dfff1d"
+    },
+    {
+      "name": "Leg_Front_Left",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -7.5,
+        0,
+        1.5
+      ],
+      "to": [
+        -6.0,
+        10,
+        3.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        -6.75,
+        5.0,
+        2.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "c93d6745-2cda-49f1-af94-3ee1aceae897"
+    },
+    {
+      "name": "Leg_Rear_Left",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -7.5,
+        0,
+        13.0
+      ],
+      "to": [
+        -6.0,
+        10,
+        14.5
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        -6.75,
+        5.0,
+        13.75
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "8884c402-d4fe-404b-8bd9-219b32c5dfe9"
+    },
+    {
+      "name": "Leg_Front_Right",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        22.0,
+        0,
+        1.5
+      ],
+      "to": [
+        23.5,
+        10,
+        3.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        22.75,
+        5.0,
+        2.25
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "2992bd43-51bb-41bb-990d-cdfffd38c10e"
+    },
+    {
+      "name": "Leg_Rear_Right",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        22.0,
+        0,
+        13.0
+      ],
+      "to": [
+        23.5,
+        10,
+        14.5
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        22.75,
+        5.0,
+        13.75
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "72e1753f-50e2-41c4-a5c3-ed2f2115b5a7"
+    },
+    {
+      "name": "Foot_Left",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -7.8,
+        0,
+        1.2
+      ],
+      "to": [
+        -5.7,
+        0.8,
+        14.8
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        -6.75,
+        0.4,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "a1f36adb-9f34-4693-955a-c72c5a9178bb"
+    },
+    {
+      "name": "Foot_Right",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        21.7,
+        0,
+        1.2
+      ],
+      "to": [
+        23.8,
+        0.8,
+        14.8
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        22.75,
+        0.4,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "5c11101d-2077-4845-a51e-2ecfea87296a"
+    },
+    {
+      "name": "Rear_Crossbar",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -6.0,
+        2.0,
+        13.4
+      ],
+      "to": [
+        22.0,
+        3.2,
+        14.2
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.0,
+        2.6,
+        13.8
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "f4034f82-9587-4e37-a7ac-c644ddc5119f"
+    },
+    {
+      "name": "UnderDesk_Server_Left",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -5.8,
+        5.5,
+        2.5
+      ],
+      "to": [
+        1.5,
+        9.8,
+        13.5
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        -2.15,
+        7.65,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            64,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            56,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "2a54073f-2feb-4a09-9924-ad103d12b5ae"
+    },
+    {
+      "name": "UnderDesk_UPS_Right",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        14.5,
+        5.5,
+        2.5
+      ],
+      "to": [
+        21.8,
+        9.8,
+        13.5
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        18.15,
+        7.65,
+        8.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            0,
+            64,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            56,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "f7e11508-b206-492b-b9cd-85a556cab582"
+    },
+    {
+      "name": "Monitor_Stand_Base",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        4.5,
+        11.2,
+        9.5
+      ],
+      "to": [
+        11.5,
+        11.8,
+        13.2
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.0,
+        11.5,
+        11.35
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "be65d4fd-0080-41d3-8779-9e0a1a427122"
+    },
+    {
+      "name": "Monitor_Stand_Pillar",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        7.1,
+        11.8,
+        11.4
+      ],
+      "to": [
+        8.9,
+        18.0,
+        12.8
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.0,
+        14.9,
+        12.100000000000001
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            56,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "83e18e17-cf7d-4ab0-aff5-8de1d29f0db6"
+    },
+    {
+      "name": "Monitor_Mount_Arm",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        1.5,
+        16.2,
+        11.2
+      ],
+      "to": [
+        14.5,
+        17.2,
+        12.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.0,
+        16.7,
+        11.6
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "053cb341-78cd-4ef0-9558-fd9c8423b61e"
+    },
+    {
+      "name": "Center_Screen_Chassis",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        2.5,
+        13.5,
+        10.2
+      ],
+      "to": [
+        13.5,
+        20.5,
+        11.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.0,
+        17.0,
+        10.6
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            16,
+            64,
+            36
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            56,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "7f72236e-ad93-467b-9308-4f8e75031393"
+    },
+    {
+      "name": "Left_Screen_Chassis",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -7.2,
+        13.5,
+        8.2
+      ],
+      "to": [
+        2.4,
+        20.5,
+        9.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        2.4,
+        17.0,
+        8.6
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            16,
+            32,
+            36
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            56,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "ca7b5124-1c40-4fa3-8167-ff26d53b5a44",
+      "rotation": [
+        0,
+        -22.5,
+        0
+      ]
+    },
+    {
+      "name": "Right_Screen_Chassis",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        13.6,
+        13.5,
+        8.2
+      ],
+      "to": [
+        23.2,
+        20.5,
+        9.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        13.6,
+        17.0,
+        8.6
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            36,
+            32,
+            56
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            56,
+            32,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "2c3704b1-5c9e-41ee-8270-19ac41090dce",
+      "rotation": [
+        0,
+        22.5,
+        0
+      ]
+    },
+    {
+      "name": "Mechanical_Keyboard",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        3.0,
+        11.2,
+        3.2
+      ],
+      "to": [
+        11.5,
+        11.7,
+        6.4
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        7.25,
+        11.45,
+        4.800000000000001
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            36,
+            48,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "59c21b1e-415d-4e53-a6c3-00baab7dc82b"
+    },
+    {
+      "name": "Control_Deck_Pad",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        12.5,
+        11.2,
+        3.4
+      ],
+      "to": [
+        17.0,
+        11.9,
+        6.6
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        14.75,
+        11.55,
+        5.0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            48,
+            36,
+            64,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "d668637c-c2c7-47c2-8889-5f4ca8107a6e"
+    },
+    {
+      "name": "Master_Switch_Box",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -1.5,
+        11.2,
+        4.0
+      ],
+      "to": [
+        1.8,
+        12.1,
+        6.8
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        0.15000000000000002,
+        11.649999999999999,
+        5.4
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            48,
+            36,
+            64,
+            48
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "2e1f465d-4105-44c4-a4c0-331bb810fabf"
+    },
+    {
+      "name": "Cable_Monitor_Left",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -1.0,
+        11.2,
+        10.5
+      ],
+      "to": [
+        -0.5,
+        15.0,
+        11.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        -0.75,
+        13.1,
+        10.75
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "738be413-9672-4d3e-b235-1ff48cf317e4"
+    },
+    {
+      "name": "Cable_Monitor_Center",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        7.8,
+        11.2,
+        10.6
+      ],
+      "to": [
+        8.3,
+        15.2,
+        11.1
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        8.05,
+        13.2,
+        10.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "9525011e-6499-44da-9fcd-fcd0dc76fc85"
+    },
+    {
+      "name": "Cable_Monitor_Right",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        16.5,
+        11.2,
+        10.5
+      ],
+      "to": [
+        17.0,
+        15.0,
+        11.0
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        16.75,
+        13.1,
+        10.75
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "8cf94959-205c-4ea6-a6fa-7429d91e2891"
+    },
+    {
+      "name": "Cable_Trunk_Left",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        -3.5,
+        6.5,
+        13.5
+      ],
+      "to": [
+        -2.8,
+        11.2,
+        14.2
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        -3.15,
+        8.85,
+        13.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "45a92110-cd9c-47f6-990e-3dafee3c4913"
+    },
+    {
+      "name": "Cable_Trunk_Right",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        18.8,
+        6.5,
+        13.5
+      ],
+      "to": [
+        19.5,
+        11.2,
+        14.2
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        19.15,
+        8.85,
+        13.85
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "ebfbc70e-2bb5-4fd3-97b9-2cf927f4a39d"
+    },
+    {
+      "name": "Cable_Keyboard_Lead",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        6.8,
+        11.2,
+        6.4
+      ],
+      "to": [
+        7.2,
+        11.5,
+        10.2
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        7.0,
+        11.35,
+        8.3
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "fb4be8de-4f9d-4702-8873-e216a1e5a200"
+    },
+    {
+      "name": "Cable_Deck_Lead",
+      "box_uv": false,
+      "rescale": false,
+      "locked": false,
+      "from": [
+        14.5,
+        11.2,
+        6.6
+      ],
+      "to": [
+        14.9,
+        11.5,
+        10.5
+      ],
+      "autouv": 0,
+      "color": 0,
+      "origin": [
+        14.7,
+        11.35,
+        8.55
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "east": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "south": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "west": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "up": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        },
+        "down": {
+          "uv": [
+            32,
+            48,
+            64,
+            64
+          ],
+          "texture": 0
+        }
+      },
+      "type": "cube",
+      "uuid": "42ba16c6-58e2-418e-b1ba-65942dbfdae8"
+    }
+  ],
+  "outliner": [
+    {
+      "name": "DataCenter_Workbench",
+      "origin": [
+        8,
+        0,
+        8
+      ],
+      "color": 0,
+      "uuid": "530b2d59-192a-44f8-b0a7-93d6af49faf3",
+      "export": true,
+      "isOpen": true,
+      "locked": false,
+      "visibility": true,
+      "autouv": 0,
+      "children": [
+        {
+          "name": "Desk_Frame_And_Chassis",
+          "origin": [
+            8,
+            0,
+            8
+          ],
+          "color": 0,
+          "uuid": "ae363ad4-a122-4fe0-994e-5c5e80cc8433",
+          "export": true,
+          "isOpen": true,
+          "locked": false,
+          "visibility": true,
+          "autouv": 0,
+          "children": [
+            "405b9888-bb1c-4def-afea-dd8dcb76d3fe",
+            "e19f841e-e971-450a-a042-c37798dfff1d",
+            "c93d6745-2cda-49f1-af94-3ee1aceae897",
+            "8884c402-d4fe-404b-8bd9-219b32c5dfe9",
+            "2992bd43-51bb-41bb-990d-cdfffd38c10e",
+            "72e1753f-50e2-41c4-a5c3-ed2f2115b5a7",
+            "a1f36adb-9f34-4693-955a-c72c5a9178bb",
+            "5c11101d-2077-4845-a51e-2ecfea87296a",
+            "f4034f82-9587-4e37-a7ac-c644ddc5119f",
+            "2a54073f-2feb-4a09-9924-ad103d12b5ae",
+            "f7e11508-b206-492b-b9cd-85a556cab582"
+          ]
+        },
+        {
+          "name": "Triple_Workscreens",
+          "origin": [
+            8,
+            12,
+            8
+          ],
+          "color": 3,
+          "uuid": "feb808d0-ce76-4906-9472-3dd124173e07",
+          "export": true,
+          "isOpen": true,
+          "locked": false,
+          "visibility": true,
+          "autouv": 0,
+          "children": [
+            "be65d4fd-0080-41d3-8779-9e0a1a427122",
+            "83e18e17-cf7d-4ab0-aff5-8de1d29f0db6",
+            "053cb341-78cd-4ef0-9558-fd9c8423b61e",
+            "7f72236e-ad93-467b-9308-4f8e75031393",
+            "ca7b5124-1c40-4fa3-8167-ff26d53b5a44",
+            "2c3704b1-5c9e-41ee-8270-19ac41090dce"
+          ]
+        },
+        {
+          "name": "Control_Peripherals",
+          "origin": [
+            8,
+            11,
+            5
+          ],
+          "color": 1,
+          "uuid": "5f40978a-9492-4b66-8031-25a6251077ba",
+          "export": true,
+          "isOpen": true,
+          "locked": false,
+          "visibility": true,
+          "autouv": 0,
+          "children": [
+            "59c21b1e-415d-4e53-a6c3-00baab7dc82b",
+            "d668637c-c2c7-47c2-8889-5f4ca8107a6e",
+            "2e1f465d-4105-44c4-a4c0-331bb810fabf"
+          ]
+        },
+        {
+          "name": "Cable_Management",
+          "origin": [
+            8,
+            6,
+            13
+          ],
+          "color": 2,
+          "uuid": "6a79d981-c33d-4286-86d8-5bb6226a1079",
+          "export": true,
+          "isOpen": true,
+          "locked": false,
+          "visibility": true,
+          "autouv": 0,
+          "children": [
+            "738be413-9672-4d3e-b235-1ff48cf317e4",
+            "9525011e-6499-44da-9fcd-fcd0dc76fc85",
+            "8cf94959-205c-4ea6-a6fa-7429d91e2891",
+            "45a92110-cd9c-47f6-990e-3dafee3c4913",
+            "ebfbc70e-2bb5-4fd3-97b9-2cf927f4a39d",
+            "fb4be8de-4f9d-4702-8873-e216a1e5a200",
+            "42ba16c6-58e2-418e-b1ba-65942dbfdae8"
+          ]
+        }
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "path": "datacenter_workbench_texture.png",
+      "name": "datacenter_workbench_texture.png",
+      "folder": "block",
+      "namespace": "minecraft",
+      "id": "0",
+      "group": "",
+      "width": 64,
+      "height": 64,
+      "uv_width": 64,
+      "uv_height": 64,
+      "particle": true,
+      "use_as_default": true,
+      "layers_enabled": false,
+      "sync_to_project": "",
+      "render_mode": "default",
+      "render_sides": "auto",
+      "frame_time": 1,
+      "frame_order_type": "loop",
+      "frame_order": "",
+      "frame_interpolate": false,
+      "visible": true,
+      "internal": true,
+      "saved": true,
+      "uuid": "05539f2f-bd21-44ce-b3ad-fb878d22ba25",
+      "relative_path": "../textures/block/datacenter_workbench_texture.png",
+      "source": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAADyklEQVR4nO2bz08TQRTHv5AmpVqVbVN+aAMoxkBtk54wMV5MPInhDzBcuXjjbjj4D3DjYDw2Xk0a48mEm2cTaiUGEJDwq6HFWC094aHsdnY6Ozuzs93ddPtJNtthd/bte/Pd1zfTZSCXn7sEgGaziWg0ClmiQzHpPiQ7W5tK/VWJAEDl9Bg3b2monB5LdU6NjAEAzmtVR8aHtcTVPumovyrntbNWANwgFpNTQqPRcMu0Eq4FAABqgkrQrkaehlTSsJZQboswKHSWh1QrL1xt7/x43NqvfgMAbK+WTccDF4BE6qOr7XsPvrT2yw8BANPLGdPxwAXAa0IfAFeTYBA5q3R+tSdTY8bn0CugHwC/b8Bvej4HkM87C1cDYFXhiUJXb6ptEVwLQFBqe1kiQGtW12w2jdmdLE4iT3JeO1Pqr4KhACdrAQDQvFAb+TvpSaX+qkQA4Ofuri/G705NwW/7hgISzz97arz66ZmpXS+ceGo/vjgKoF8HtBVAj4jX6CPiNX0FkI16bUG4Y1wrShurF064Iy1i38ounUN0O/Q16f4R3kG3sZO5qv2J9xsAgP2XOeZ1WQF2rACWATvcUICKfRY9pQB65HV4gXVFASQ8J7qZA4xnnrIR14qo1xYs+/WUAnQbZBB4zgNUAP4UTpVvgOTG4oip7VUO0IOA+SXboA7k8nOXvTYXsPpKZNl3PQdYEdeKXc0BHecROYFHz+UAWZQUIHvDXtYBorPLnlSAzMQq9JOhAf0VmbASegUEYk1Q9t0kHX0Vu1Z1tqqsJZLtJNjNGoAFnfBms3l8L30V3tMc7D01Pqcn13GwttVuv7pveR+B+WlMd0p074RMtj1bLJdaawdGAPwoQkhUFWBHJpvD5vAbor2Co8PD3lFAenLd3ObInoT7LVAvnHRs3WI2m5fa0ww++WBsAPBrbdvYeFgqwKpstStnedcDrKu0bueAcmkDmeyKqa0lkmwFcJ2cX5JWgn49fZ7O6q+qABHKpQ1j0+lYD+A5T66uyCjB6txA1QF22C0tGedRzooE6vjtnuhtmEi9fuSoH4lQAGSdt3veaXKKjmgJ52+bCwVAtkawWqFl8TvzTurabuNaHcByNr44aiqx/S62WHQEgF5WZiHynOuOk04HMRhMBfCCYDXSgL2DQXGaxPIRIJMZ/Xca1miLMjEzLd3HTbg5QDSLB3FkRfF9MrS/ya/Vu00EaFdkYaS/JggAR4cHuGj8xVDsOgB49nn8dtoTJ3n4ngP+Hfn7n6P9R8DvG7g2PuOr/dArIPQBiAAIRDb2i//epAeZULUsEQAAAABJRU5ErkJggg=="
+    }
+  ]
+}

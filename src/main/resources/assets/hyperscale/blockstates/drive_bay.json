@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=west": { "model": "hyperscale:block/drive_bay" },
+    "facing=north": { "model": "hyperscale:block/drive_bay", "y": 90 },
+    "facing=east": { "model": "hyperscale:block/drive_bay", "y": 180 },
+    "facing=south": { "model": "hyperscale:block/drive_bay", "y": 270 }
+  }
+}

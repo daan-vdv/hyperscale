@@ -1,0 +1,55 @@
+{
+  "variants": {
+    "facing=north,half=lower,part=primary": {
+      "model": "hyperscale:block/interface"
+    },
+    "facing=north,half=lower,part=secondary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=north,half=upper,part=primary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=north,half=upper,part=secondary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=east,half=lower,part=primary": {
+      "model": "hyperscale:block/interface",
+      "y": 90
+    },
+    "facing=east,half=lower,part=secondary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=east,half=upper,part=primary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=east,half=upper,part=secondary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=south,half=lower,part=primary": {
+      "model": "hyperscale:block/interface",
+      "y": 180
+    },
+    "facing=south,half=lower,part=secondary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=south,half=upper,part=primary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=south,half=upper,part=secondary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=west,half=lower,part=primary": {
+      "model": "hyperscale:block/interface",
+      "y": 270
+    },
+    "facing=west,half=lower,part=secondary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=west,half=upper,part=primary": {
+      "model": "hyperscale:block/interface_helper"
+    },
+    "facing=west,half=upper,part=secondary": {
+      "model": "hyperscale:block/interface_helper"
+    }
+  }
+}

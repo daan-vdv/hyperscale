@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "hyperscale:block/recorder_output_up",
+      "x": 180
+    },
+    "facing=up": {
+      "model": "hyperscale:block/recorder_output_up"
+    },
+    "facing=north": {
+      "model": "hyperscale:block/recorder_output"
+    },
+    "facing=east": {
+      "model": "hyperscale:block/recorder_output",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "hyperscale:block/recorder_output",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "hyperscale:block/recorder_output",
+      "y": 270
+    }
+  }
+}
