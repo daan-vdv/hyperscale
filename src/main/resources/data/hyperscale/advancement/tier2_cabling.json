@@ -1,0 +1,14 @@
+{
+  "parent": "hyperscale:tier1_storage",
+  "display": {
+    "icon": { "id": "hyperscale:cable" },
+    "title": { "translate": "advancement.hyperscale.tier2_cabling.title" },
+    "description": { "translate": "advancement.hyperscale.tier2_cabling.desc" }
+  },
+  "criteria": {
+    "has_cable": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:cable" }] }
+    }
+  }
+}

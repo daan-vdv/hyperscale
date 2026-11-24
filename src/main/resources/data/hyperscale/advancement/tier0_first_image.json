@@ -1,0 +1,15 @@
+{
+  "parent": "hyperscale:tier0_compiler",
+  "display": {
+    "icon": { "id": "hyperscale:image" },
+    "title": { "translate": "advancement.hyperscale.tier0_first_image.title" },
+    "description": { "translate": "advancement.hyperscale.tier0_first_image.desc" },
+    "frame": "goal"
+  },
+  "criteria": {
+    "has_image": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:image" }] }
+    }
+  }
+}

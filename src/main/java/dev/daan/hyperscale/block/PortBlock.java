@@ -1,8 +1,6 @@
 package dev.daan.hyperscale.block;
 
 import dev.daan.hyperscale.blockentity.PortBlockEntity;
-import dev.daan.hyperscale.item.BinderItem;
-import dev.daan.hyperscale.item.HallInsertables;
 import dev.daan.hyperscale.menu.StorageKind;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -12,6 +10,7 @@ import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -32,7 +31,7 @@ public class PortBlock extends InventoryMachineBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(MODE);
     }
 
@@ -40,25 +39,20 @@ public class PortBlock extends InventoryMachineBlock {
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (player.isShiftKeyDown()) {
             this.open(level, pos, player);
-            return InteractionResult.SUCCESS;
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
         this.cycle(state, level, pos, player);
-        return InteractionResult.SUCCESS;
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (HallInsertables.isBinder(stack)) {
-            return BinderItem.apply(level, pos, player, stack)
-                    ? ItemInteractionResult.sidedSuccess(level.isClientSide)
-                    : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
         if (player.isShiftKeyDown() || !stack.isEmpty()) {
             this.open(level, pos, player);
-            return ItemInteractionResult.SUCCESS;
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         this.cycle(state, level, pos, player);
-        return ItemInteractionResult.SUCCESS;
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     private void cycle(BlockState state, Level level, BlockPos pos, Player player) {
@@ -66,7 +60,7 @@ public class PortBlock extends InventoryMachineBlock {
             return;
         }
         BlockState cycled = state.cycle(MODE);
-        level.setBlock(pos, cycled, net.minecraft.world.level.block.Block.UPDATE_ALL);
+        level.setBlock(pos, cycled, Block.UPDATE_ALL);
         level.invalidateCapabilities(pos);
         player.displayClientMessage(
                 Component.translatable("message.hyperscale.port." + cycled.getValue(MODE).getSerializedName()),

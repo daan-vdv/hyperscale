@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["NQN", "CSC", "NRN"],
+  "key": {
+    "N": { "tag": "c:ingots/netherite" },
+    "Q": { "item": "hyperscale:quantum_die" },
+    "C": { "item": "hyperscale:cpu_64c" },
+    "S": { "item": "minecraft:nether_star" },
+    "R": { "item": "minecraft:redstone_block" }
+  },
+  "result": { "id": "hyperscale:cpu_128c", "count": 1 }
+}

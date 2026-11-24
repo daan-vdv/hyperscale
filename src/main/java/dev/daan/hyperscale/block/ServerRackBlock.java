@@ -1,11 +1,7 @@
 package dev.daan.hyperscale.block;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import dev.daan.hyperscale.blockentity.InventoryBlockEntity;
 import dev.daan.hyperscale.blockentity.ServerRackBlockEntity;
-import dev.daan.hyperscale.item.BinderItem;
 import dev.daan.hyperscale.item.HallInsertables;
 import dev.daan.hyperscale.menu.StorageKind;
 import net.minecraft.core.BlockPos;
@@ -53,7 +49,7 @@ public class ServerRackBlock extends InventoryMachineBlock {
             1.0D / 16.0D, 0.0D, 0.65D / 16.0D,
             15.0D / 16.0D, 1.0D, 15.0D / 16.0D
     );
-    private static final Map<Direction, VoxelShape> CELL_SHAPES = new ConcurrentHashMap<>();
+    private static final VoxelShape[] CELL_SHAPES = buildShapes();
     private static final ThreadLocal<Boolean> CLEARING = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
     public ServerRackBlock(Properties properties) {
@@ -61,6 +57,14 @@ public class ServerRackBlock extends InventoryMachineBlock {
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(HALF, DoubleBlockHalf.LOWER));
+    }
+
+    private static VoxelShape[] buildShapes() {
+        VoxelShape[] shapes = new VoxelShape[4];
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            shapes[direction.get2DDataValue()] = rotate(SHAPE_NORTH_CELL, direction);
+        }
+        return shapes;
     }
 
     public static boolean isLower(BlockState state) {
@@ -72,7 +76,7 @@ public class ServerRackBlock extends InventoryMachineBlock {
     }
 
     private static VoxelShape shapeFor(Direction facing) {
-        return CELL_SHAPES.computeIfAbsent(facing, direction -> rotate(SHAPE_NORTH_CELL, direction));
+        return CELL_SHAPES[facing.get2DDataValue()];
     }
 
     private static VoxelShape rotate(VoxelShape shape, Direction facing) {
@@ -96,7 +100,8 @@ public class ServerRackBlock extends InventoryMachineBlock {
         Direction facing = context.getHorizontalDirection().getOpposite();
         BlockPos origin = context.getClickedPos();
         Level level = context.getLevel();
-        if (origin.getY() > level.getMaxBuildHeight() - 1 || !this.fits(level, origin)) {
+        BlockPos above = origin.above();
+        if (origin.getY() >= level.getMaxBuildHeight() - 1 || !level.isInWorldBounds(above) || !this.fits(context, above)) {
             return null;
         }
         return this.defaultBlockState()
@@ -104,9 +109,9 @@ public class ServerRackBlock extends InventoryMachineBlock {
                 .setValue(HALF, DoubleBlockHalf.LOWER);
     }
 
-    private boolean fits(Level level, BlockPos origin) {
-        BlockState above = level.getBlockState(origin.above());
-        return above.canBeReplaced() || above.isAir();
+    private boolean fits(BlockPlaceContext context, BlockPos above) {
+        BlockState state = context.getLevel().getBlockState(above);
+        return state.canBeReplaced(context) || state.isAir();
     }
 
     @Override
@@ -134,21 +139,23 @@ public class ServerRackBlock extends InventoryMachineBlock {
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock())) {
+        if (!level.isClientSide && !state.is(newState.getBlock())) {
             this.clearSibling(level, pos, state);
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     private void clearSibling(Level level, BlockPos pos, BlockState state) {
-        if (CLEARING.get()) {
+        if (level.isClientSide || CLEARING.get()) {
             return;
         }
         CLEARING.set(Boolean.TRUE);
         try {
             BlockPos other = isLower(state) ? pos.above() : pos.below();
             BlockState otherState = level.getBlockState(other);
-            if (otherState.is(this) && otherState.getValue(FACING) == state.getValue(FACING)) {
+            if (otherState.is(this)
+                    && otherState.getValue(FACING) == state.getValue(FACING)
+                    && otherState.getValue(HALF) != state.getValue(HALF)) {
                 level.setBlock(other, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL | Block.UPDATE_SUPPRESS_DROPS);
             }
         } finally {
@@ -167,21 +174,16 @@ public class ServerRackBlock extends InventoryMachineBlock {
         if (player.isShiftKeyDown()) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        if (HallInsertables.isBinder(stack)) {
-            return BinderItem.apply(level, base, player, stack)
-                    ? ItemInteractionResult.sidedSuccess(level.isClientSide)
-                    : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
         if (HallInsertables.insertsInto(this.kind(), stack)) {
             if (player instanceof ServerPlayer && level.getBlockEntity(base) instanceof InventoryBlockEntity inventory) {
-                if (!inventory.insertOne(player.getItemInHand(hand))) {
+                if (!inventory.insertOne(player.getItemInHand(hand), player.hasInfiniteMaterials())) {
                     this.open(level, base, player);
                 }
             }
-            return ItemInteractionResult.SUCCESS;
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         this.open(level, base, player);
-        return ItemInteractionResult.SUCCESS;
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override

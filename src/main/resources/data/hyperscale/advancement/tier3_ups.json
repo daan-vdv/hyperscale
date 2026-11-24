@@ -1,0 +1,14 @@
+{
+  "parent": "hyperscale:tier3_gpu",
+  "display": {
+    "icon": { "id": "hyperscale:backup_generator" },
+    "title": { "translate": "advancement.hyperscale.tier3_ups.title" },
+    "description": { "translate": "advancement.hyperscale.tier3_ups.desc" }
+  },
+  "criteria": {
+    "has_ups": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:backup_generator" }] }
+    }
+  }
+}

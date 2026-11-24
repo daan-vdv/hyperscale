@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IRI",
+    "ECE",
+    "III"
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "R": { "item": "minecraft:redstone" },
+    "E": { "item": "hyperscale:empty_image_card" },
+    "C": { "item": "minecraft:chest" }
+  },
+  "result": { "id": "hyperscale:image_registry", "count": 1 }
+}

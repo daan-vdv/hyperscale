@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SNS", "DWD", "SNS"],
+  "key": {
+    "S": { "item": "minecraft:netherite_scrap" },
+    "N": { "item": "hyperscale:nand_die" },
+    "D": { "item": "hyperscale:ssd_64gb" },
+    "W": { "item": "hyperscale:doped_wafer" }
+  },
+  "result": { "id": "hyperscale:nvme_64gb", "count": 1 }
+}

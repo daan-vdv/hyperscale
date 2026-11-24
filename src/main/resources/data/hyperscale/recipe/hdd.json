@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["IRI", "PNP", "IRI"],
+  "key": {
+    "I": { "tag": "c:ingots/iron" },
+    "R": { "tag": "c:dusts/redstone" },
+    "P": { "item": "hyperscale:pcb" },
+    "N": { "item": "hyperscale:nand_die" }
+  },
+  "result": { "id": "hyperscale:hdd", "count": 1 }
+}

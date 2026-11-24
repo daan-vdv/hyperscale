@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["IQI", "QGQ", "IQI"],
+  "key": {
+    "I": { "tag": "c:ingots/iron" },
+    "Q": { "tag": "c:gems/quartz" },
+    "G": { "tag": "c:glass_blocks" }
+  },
+  "result": { "id": "hyperscale:mask_storage", "count": 1 }
+}

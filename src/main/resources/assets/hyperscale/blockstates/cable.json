@@ -1,0 +1,68 @@
+{
+  "multipart": [
+    {
+      "when": { "straight": "none" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_core" }
+    },
+    {
+      "when": { "straight": "z" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_straight" }
+    },
+    {
+      "when": { "straight": "x" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_straight", "y": 90 }
+    },
+    {
+      "when": { "straight": "y" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_straight", "x": 90 }
+    },
+    {
+      "when": { "straight": "none", "north": "cable|machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_arm" }
+    },
+    {
+      "when": { "straight": "none", "east": "cable|machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_arm", "y": 90 }
+    },
+    {
+      "when": { "straight": "none", "south": "cable|machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_arm", "y": 180 }
+    },
+    {
+      "when": { "straight": "none", "west": "cable|machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_arm", "y": 270 }
+    },
+    {
+      "when": { "straight": "none", "up": "cable|machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_arm", "x": 270 }
+    },
+    {
+      "when": { "straight": "none", "down": "cable|machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_arm", "x": 90 }
+    },
+    {
+      "when": { "north": "machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_connector" }
+    },
+    {
+      "when": { "east": "machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_connector", "y": 90 }
+    },
+    {
+      "when": { "south": "machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_connector", "y": 180 }
+    },
+    {
+      "when": { "west": "machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_connector", "y": 270 }
+    },
+    {
+      "when": { "up": "machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_connector", "x": 270 }
+    },
+    {
+      "when": { "down": "machine" },
+      "apply": { "model": "hyperscale:block/datacenter_hybrid_cable_connector", "x": 90 }
+    }
+  ]
+}

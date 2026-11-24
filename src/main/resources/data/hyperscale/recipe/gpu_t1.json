@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["DMD", "PTP", "GMG"],
+  "key": {
+    "D": { "tag": "c:gems/diamond" },
+    "M": { "item": "hyperscale:memory_die" },
+    "P": { "item": "hyperscale:pcb" },
+    "T": { "item": "hyperscale:tensor_die" },
+    "G": { "tag": "c:ingots/gold" }
+  },
+  "result": { "id": "hyperscale:gpu_t1", "count": 1 }
+}

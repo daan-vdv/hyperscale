@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "ICI",
+    "RQR",
+    "ICI"
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "C": { "item": "minecraft:copper_ingot" },
+    "R": { "item": "minecraft:redstone" },
+    "Q": { "item": "minecraft:quartz" }
+  },
+  "result": { "id": "hyperscale:cable", "count": 8 }
+}

@@ -1,0 +1,159 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: "rsquare"
+	filename: "hyperscale"
+	group: ""
+	icon: {
+		id: "hyperscale:interface"
+	}
+	id: "7A1B2C3D4E5F6001"
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			description: [
+				"Welcome to &bHyperscale&r!"
+				""
+				"Every datacenter starts with silicon. Smelt Quartz into &bRaw Silicon&r (or use Silicon from AE2/Mekanism), press &bSilicon Wafers&r and &aPCBs&r in the &bWafer Press&r, and etch dies in the &dLithography Etcher&r using reusable &ePhotomasks&r."
+				""
+				"Tip: You can later encase your own Silicon Fab in Compiler Casing to virtualize chip production!"
+			]
+			id: "7A1B2C3D4E5F6005"
+			tasks: [
+				{ id: "7A1B2C3D4E5F6006", item: { id: "hyperscale:wafer_press" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6007", item: { id: "hyperscale:lithography_etcher" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6008", item: { id: "hyperscale:pcb" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6009", item: { id: "hyperscale:logic_die" }, type: "item" }
+			]
+			title: "Tier 0: Semiconductor Fab"
+			x: -8.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7A1B2C3D4E5F6005"]
+			description: [
+				"Instead of building hundreds of laggy machines, build a working factory &oonce&r inside a sealed &bCompiler Casing&r room and compile it into a portable &bImage Card&r."
+			]
+			id: "7A1B2C3D4E5F6010"
+			tasks: [
+				{ id: "7A1B2C3D4E5F6011", item: { id: "hyperscale:recorder" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6012", item: { count: 16, id: "hyperscale:recorder_casing" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6013", item: { id: "hyperscale:empty_image_card" }, type: "item" }
+			]
+			title: "Tier 0: Sealed Test Chamber"
+			x: -6.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7A1B2C3D4E5F6010"]
+			description: [
+				"Place a machine (like a Furnace, Mekanism Crusher, or even a Wafer Press) inside the sealed casing with &aRecorder Input&r / &6Recorder Output&r probes (plus &bFluid Probes&r and a &ePower Port&r if needed), insert an Empty Image Card, and complete 3 calibration runs."
+			]
+			id: "7A1B2C3D4E5F6020"
+			shape: "hexagon"
+			tasks: [
+				{ id: "7A1B2C3D4E5F6021", item: { id: "hyperscale:image" }, type: "item" }
+			]
+			title: "Tier 0: First Compilation"
+			x: -4.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7A1B2C3D4E5F6020"]
+			description: [
+				"Build your first Homelab Rack! Insert your compiled &bImage Card&r into the &bNetwork Switch&r, power the Switch with FE, and populate a &bServer Rack&r with a Server, CPU, and RAM."
+			]
+			id: "7A1B2C3D4E5F6030"
+			tasks: [
+				{ id: "7A1B2C3D4E5F6031", item: { id: "hyperscale:interface" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6032", item: { id: "hyperscale:switch" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6033", item: { id: "hyperscale:server_rack" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6034", item: { id: "hyperscale:cpu_4c" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6035", item: { id: "hyperscale:ram_4gb_ddr4" }, type: "item" }
+			]
+			title: "Tier 1: The Homelab Rack"
+			x: -2.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7A1B2C3D4E5F6030"]
+			description: [
+				"Place a &bDrive Bay&r loaded with HDDs or SSDs to store recipe ingredients and container outputs. Feed items via &aInput Ports&r and export via &6Whitelisted Output Ports&r."
+				""
+				"Tip: Enable &eRAID 1&r or &eRAID 5&r in the Drive Bay GUI to protect against drive wear!"
+			]
+			id: "7A1B2C3D4E5F6040"
+			tasks: [
+				{ id: "7A1B2C3D4E5F6041", item: { id: "hyperscale:drive_bay" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6042", item: { id: "hyperscale:hdd" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6043", item: { count: 2, id: "hyperscale:port" }, type: "item" }
+			]
+			title: "Tier 1: Drive Bay & Ports"
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7A1B2C3D4E5F6040"]
+			description: [
+				"Expand into a full datacenter hall! Run &bHybrid Cables&r from your &bNetwork Switch&r to connect rows of Server Racks, Drive Bays, and Cooling."
+				""
+				"As your hall heats up past 80°C, add &bServer Fans&r to prevent thermal throttling."
+			]
+			id: "7A1B2C3D4E5F6050"
+			tasks: [
+				{ id: "7A1B2C3D4E5F6051", item: { count: 8, id: "hyperscale:cable" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6052", item: { id: "hyperscale:server_fan" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6053", item: { id: "hyperscale:ssd_64gb" }, type: "item" }
+			]
+			title: "Tier 2: Air-Cooled Datacenter"
+			x: 2.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["7A1B2C3D4E5F6050"]
+			description: [
+				"Etch water-cooled &dTensor Dies&r to build a &dGPU&r for your Server Rack's 4th slot — then tame the heat with a &bWatercooler Controller&r (pipe or bucket Water into it for +4,000W liquid cooling and &bOverclock&r mode; place &bServer Fans&r adjacent to form a closed-loop radiator saving up to 75% water!)."
+			]
+			id: "7A1B2C3D4E5F6060"
+			shape: "hexagon"
+			tasks: [
+				{ id: "7A1B2C3D4E5F6061", item: { id: "hyperscale:gpu_t1" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6062", item: { id: "hyperscale:watercooler_controller" }, type: "item" }
+			]
+			title: "Tier 3: GPUs & Liquid Cooling"
+			x: 4.0d
+			y: -1.0d
+		}
+		{
+			dependencies: ["7A1B2C3D4E5F6050"]
+			description: [
+				"Build a 2x2x2 &6Backup Generator (UPS)&r connected to your hall to add a shared &e10,000,000 FE&r battery buffer against high-replica power spikes."
+			]
+			id: "7A1B2C3D4E5F6070"
+			tasks: [
+				{ id: "7A1B2C3D4E5F6071", item: { id: "hyperscale:backup_generator" }, type: "item" }
+			]
+			title: "Tier 3: Uninterruptible Power"
+			x: 4.0d
+			y: 1.0d
+		}
+		{
+			dependencies: ["7A1B2C3D4E5F6060", "7A1B2C3D4E5F6070"]
+			description: [
+				"Craft apex datacenter silicon: &6128-Core Quantum CPUs&r, &6512 GB DDR5 ECC RAM&r, &dTensor Cluster GPUs&r, and &b256 GB NVMe SSDs&r to compress your entire endgame megabase."
+			]
+			id: "7A1B2C3D4E5F6080"
+			shape: "gear"
+			size: 1.5d
+			tasks: [
+				{ id: "7A1B2C3D4E5F6081", item: { id: "hyperscale:cpu_128c" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6082", item: { id: "hyperscale:gpu_t3" }, type: "item" }
+				{ id: "7A1B2C3D4E5F6083", item: { id: "hyperscale:nvme_256gb" }, type: "item" }
+			]
+			title: "Tier 4: Hyperscale Apex"
+			x: 6.5d
+			y: 0.0d
+		}
+	]
+	title: "Hyperscale Datacenter"
+}

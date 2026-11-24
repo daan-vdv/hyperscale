@@ -1,0 +1,15 @@
+{
+  "parent": "hyperscale:tier3_gpu",
+  "display": {
+    "icon": { "id": "hyperscale:watercooler_controller" },
+    "title": { "translate": "advancement.hyperscale.tier3_watercooling.title" },
+    "description": { "translate": "advancement.hyperscale.tier3_watercooling.desc" },
+    "frame": "goal"
+  },
+  "criteria": {
+    "has_watercooler": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:watercooler_controller" }] }
+    }
+  }
+}

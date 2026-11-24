@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ILI", "LGL", "ILI"],
+  "key": {
+    "I": { "tag": "c:ingots/iron" },
+    "L": { "item": "minecraft:lapis_lazuli" },
+    "G": { "tag": "c:glass_blocks" }
+  },
+  "result": { "id": "hyperscale:mask_memory", "count": 1 }
+}

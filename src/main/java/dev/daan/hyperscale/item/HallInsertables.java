@@ -17,8 +17,12 @@ public final class HallInsertables {
             return false;
         }
         return switch (kind) {
-            case DRIVE -> stack.is(ModItems.IMAGE.get()) || stack.is(ModItems.HDD.get());
-            case RACK -> stack.is(ModItems.SERVER.get()) || stack.is(ModItems.CPU.get()) || stack.is(ModItems.RAM.get());
+            case DRIVE -> stack.getItem() instanceof StorageDriveItem;
+            case REGISTRY, SWITCH -> stack.is(ModItems.IMAGE.get());
+            case RACK -> stack.is(ModItems.SERVER.get())
+                    || stack.getItem() instanceof CpuItem
+                    || stack.getItem() instanceof RamItem
+                    || stack.getItem() instanceof GpuItem;
             case PORT, PROBE -> false;
         };
     }

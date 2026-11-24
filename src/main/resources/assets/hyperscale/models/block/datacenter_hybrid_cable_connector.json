@@ -1,0 +1,193 @@
+{
+  "credit": "Made for Blockbench - Datacenter Hybrid Watercooling + Fiber + Power Cable",
+  "texture_size": [
+    32,
+    32
+  ],
+  "textures": {
+    "0": "hyperscale:block/datacenter_hybrid_cable",
+    "particle": "hyperscale:block/datacenter_hybrid_cable"
+  },
+  "elements": [
+    {
+      "name": "machine_ae2_interface_flange",
+      "from": [
+        4.5,
+        4.5,
+        0
+      ],
+      "to": [
+        11.5,
+        11.5,
+        1.75
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            8,
+            8,
+            16
+          ],
+          "texture": "#0",
+          "cullface": "north"
+        },
+        "east": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            8,
+            8,
+            16
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "machine_interface_power_bus_collar",
+      "from": [
+        5,
+        5,
+        1.75
+      ],
+      "to": [
+        11,
+        11,
+        2.5
+      ],
+      "faces": {
+        "east": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    },
+    "fixed": {
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  }
+}

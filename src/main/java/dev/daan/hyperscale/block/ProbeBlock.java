@@ -1,6 +1,7 @@
 package dev.daan.hyperscale.block;
 
 import dev.daan.hyperscale.blockentity.ProbeBlockEntity;
+import dev.daan.hyperscale.item.BinderItem;
 import dev.daan.hyperscale.menu.StorageKind;
 import dev.daan.hyperscale.menu.StorageMenu;
 import dev.daan.hyperscale.registry.ModBlockEntities;
@@ -88,16 +89,16 @@ public class ProbeBlock extends Block implements EntityBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         this.open(level, pos, player);
-        return InteractionResult.SUCCESS;
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (dev.daan.hyperscale.item.BinderItem.apply(level, pos, player, stack)) {
+        if (BinderItem.apply(level, pos, player, stack)) {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         this.open(level, pos, player);
-        return ItemInteractionResult.SUCCESS;
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     private void open(Level level, BlockPos pos, Player player) {
@@ -105,14 +106,17 @@ public class ProbeBlock extends Block implements EntityBlock {
             return;
         }
         serverPlayer.openMenu(new SimpleMenuProvider(
-                (containerId, inventory, ignored) -> new StorageMenu(containerId, inventory, pos, probe.items(), StorageKind.PROBE),
+                (containerId, inventory, ignored) -> new StorageMenu(containerId, inventory, pos, pos, probe.items(), StorageKind.PROBE),
                 Component.translatable(this.getDescriptionId())
-        ), buffer -> buffer.writeBlockPos(pos));
+        ), buffer -> {
+            buffer.writeBlockPos(pos);
+            buffer.writeBlockPos(pos);
+        });
     }
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof ProbeBlockEntity probe) {
+        if (!level.isClientSide && !state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof ProbeBlockEntity probe) {
             probe.notifyRemoved();
             probe.dropContents();
         }

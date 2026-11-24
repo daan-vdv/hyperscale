@@ -3,6 +3,7 @@ package dev.daan.hyperscale.blockentity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -14,14 +15,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public class InventoryBlockEntity extends BlockEntity {
+    private final int expectedSlots;
+    private boolean suppressItemCallbacks;
     protected final ItemStackHandler items;
 
     public InventoryBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state, int slots) {
         super(type, pos, state);
+        this.expectedSlots = slots;
         this.items = new ItemStackHandler(slots) {
             @Override
             protected void onContentsChanged(int slot) {
-                InventoryBlockEntity.this.onItemsChanged(slot);
+                if (!InventoryBlockEntity.this.suppressItemCallbacks) {
+                    InventoryBlockEntity.this.onItemsChanged(slot);
+                }
             }
 
             @Override
@@ -52,13 +58,14 @@ public class InventoryBlockEntity extends BlockEntity {
         return this.items;
     }
 
-    public boolean insertOne(ItemStack stack) {
+    public boolean insertOne(ItemStack stack, boolean creative) {
         if (stack.isEmpty()) {
             return false;
         }
         for (int slot = 0; slot < this.items.getSlots(); slot++) {
             if (this.items.getStackInSlot(slot).isEmpty() && this.items.isItemValid(slot, stack)) {
-                this.items.setStackInSlot(slot, stack.split(1));
+                ItemStack single = creative ? stack.copyWithCount(1) : stack.split(1);
+                this.items.setStackInSlot(slot, single);
                 return true;
             }
         }
@@ -66,15 +73,20 @@ public class InventoryBlockEntity extends BlockEntity {
     }
 
     public void dropContents() {
-        if (this.level == null) {
+        if (this.level == null || this.level.isClientSide) {
             return;
         }
-        for (int slot = 0; slot < this.items.getSlots(); slot++) {
-            ItemStack stack = this.items.getStackInSlot(slot);
-            if (!stack.isEmpty()) {
-                Block.popResource(this.level, this.worldPosition, stack.copy());
-                this.items.setStackInSlot(slot, ItemStack.EMPTY);
+        this.suppressItemCallbacks = true;
+        try {
+            for (int slot = 0; slot < this.items.getSlots(); slot++) {
+                ItemStack stack = this.items.getStackInSlot(slot);
+                if (!stack.isEmpty()) {
+                    Block.popResource(this.level, this.worldPosition, stack.copy());
+                    this.items.setStackInSlot(slot, ItemStack.EMPTY);
+                }
             }
+        } finally {
+            this.suppressItemCallbacks = false;
         }
     }
 
@@ -94,8 +106,10 @@ public class InventoryBlockEntity extends BlockEntity {
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
-        if (tag.contains("Inventory")) {
-            this.items.deserializeNBT(registries, tag.getCompound("Inventory"));
+        if (tag.contains("Inventory", Tag.TAG_COMPOUND)) {
+            CompoundTag invTag = tag.getCompound("Inventory").copy();
+            invTag.putInt("Size", this.expectedSlots);
+            this.items.deserializeNBT(registries, invTag);
         }
     }
 

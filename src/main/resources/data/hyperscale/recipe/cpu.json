@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["GLG", "PCP", "GLG"],
+  "key": {
+    "G": { "tag": "c:ingots/gold" },
+    "L": { "item": "hyperscale:logic_die" },
+    "P": { "item": "hyperscale:pcb" },
+    "C": { "item": "hyperscale:cpu_4c" }
+  },
+  "result": { "id": "hyperscale:cpu", "count": 1 }
+}

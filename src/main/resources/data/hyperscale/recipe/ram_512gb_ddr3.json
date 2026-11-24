@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["NMN", "AWA", "DMD"],
+  "key": {
+    "N": { "tag": "c:ingots/netherite" },
+    "M": { "item": "hyperscale:memory_die" },
+    "A": { "item": "hyperscale:ram_64gb_ddr4" },
+    "W": { "item": "hyperscale:doped_wafer" },
+    "D": { "tag": "c:gems/diamond" }
+  },
+  "result": { "id": "hyperscale:ram_512gb_ddr3", "count": 1 }
+}

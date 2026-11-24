@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    { "when": { "facing": "north", "ox": "0", "oy": "0", "oz": "0" }, "apply": { "model": "hyperscale:block/backup_generator" } },
+    { "when": { "facing": "east",  "ox": "0", "oy": "0", "oz": "0" }, "apply": { "model": "hyperscale:block/backup_generator", "y": 90 } },
+    { "when": { "facing": "south", "ox": "0", "oy": "0", "oz": "0" }, "apply": { "model": "hyperscale:block/backup_generator", "y": 180 } },
+    { "when": { "facing": "west",  "ox": "0", "oy": "0", "oz": "0" }, "apply": { "model": "hyperscale:block/backup_generator", "y": 270 } },
+    { "when": { "OR": [ { "ox": "1" }, { "oy": "1" }, { "oz": "1" } ] }, "apply": { "model": "hyperscale:block/interface_helper" } }
+  ]
+}

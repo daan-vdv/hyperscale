@@ -1,0 +1,10 @@
+{
+  "type": "hyperscale:wafer_press",
+  "base": { "tag": "c:ingots/copper" },
+  "base_count": 2,
+  "dopant": { "tag": "c:dusts/redstone" },
+  "dopant_count": 2,
+  "result": { "id": "hyperscale:pcb", "count": 2 },
+  "ticks": 40,
+  "energy": 1200
+}

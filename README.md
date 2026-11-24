@@ -1,60 +1,47 @@
 # Hyperscale
 
-A datacenter hall for Minecraft 1.21.1 on NeoForge. Clip an Image Compiler onto an existing factory, prove a steady rate, and run that Image on racks. Heat and power on the interface are status words only. There is no engineer yet.
+**Hyperscale** is a NeoForge `1.21.1` datacenter & factory-virtualization mod. Instead of building hundreds of laggy machines, you build a **Semiconductor Fab**, encase any working automation setup *once* inside a sealed **Compiler Casing** chamber to compile it into a portable **Image Card**, and scale replicas cleanly inside a real datacenter hall.
 
-## Digitize a factory
+> **Early Alpha Playtest Notice:** Textures and crafting recipes are still Work-in-Progress! Feedback on mechanics, capture edge cases/exploits, cooling balance, and modpack compatibility is very welcome via [GitHub Issues](https://github.com/daan-vdv/hyperscale/issues).
 
-Craft an Empty Image Card (iron, paper, redstone) and a Binder (iron, redstone, stick).
+## Installing (Playtest)
 
-1. Place a **Recorder Input** against the start of your line, like a hopper. The picture face is outside. The other face must touch the machine or hopper you feed.
-2. Place a **Recorder Output** against the end the same way.
-3. Place an **Image Compiler** nearby.
-4. Right-click the compiler with the Binder, then right-click each input and output. The action bar says when a terminal is bound. Sneak-right-click a terminal with the Binder to unbind.
-5. Put a batch in the inputs (for example 8 iron ore, and coal through another input if the furnace needs it). Empty card in the compiler. Press Start.
-6. The compiler pushes that batch and waits until the inputs are empty and the machines in the claim are back to how they started. That is run 1. Load the same batch again, press Next run. Do that three times. Take the Image.
+1. Download the latest `hyperscale-*.jar` from [GitHub Releases](https://github.com/daan-vdv/hyperscale/releases).
+2. Drop it into your **Minecraft 1.21.1 (NeoForge)** `mods/` folder (works standalone or inside packs like ATM10 / ATM10TTS).
+3. **Recommended companion mods:** JEI (full Wafer Press & Lithography recipe support), Jade (live cluster/rack/watercooler tooltips), and any FE power mod (e.g., Mekanism, AE2).
+4. Press **`L`** in-game and open the **Hyperscale** advancement tab for a guided progression tree.
 
-A run is finished when every input is empty, the photographed inventories inside the claim match again, and nothing has moved for about two seconds. That is how it knows the ore finished smelting without a timer. Probe inventories are ignored for the photo.
+## Core Mechanics
 
-There is no sealed room, no dye channel, and no sample clock. The Image stores what crossed the terminals in a run and how long that run took.
+- **2-Machine Semiconductor Fab (`Wafer Press` → `Lithography Etcher`):**
+  - Smelt Quartz into Raw Silicon (`#c:silicon` — also accepts AE2 / Mekanism / Refined Storage Silicon automatically).
+  - Press **Silicon Wafers**, **PCBs**, **Doped Wafers**, and **EUV Quantum Wafers** in the `Wafer Press`.
+  - Etch **Logic, Memory, NAND, Tensor, and Quantum Dies** in the `Lithography Etcher` using reusable **Photomasks** (plus Water for EUV chips).
+  - *Recursive bonus:* You can encase your own Silicon Fab in `Compiler Casing` to virtualize chip manufacturing!
+- **Image Compiler & Sealed Test Chamber:** Encase any vanilla or modded automation (Furnaces, Mekanism machines, Wafer Presses, etc.) in `Compiler Casing` with `Recorder Input` / `Recorder Output` probes (plus `Fluid Probes` and `Compiler Power Port`). After 3 verified calibration runs (with full interior item, fluid, energy, `ItemEntity`, and block-integrity verification), the factory is compiled onto an **Image Card**.
+- **Multi-Container Orchestrator (`Interface`):** Deploy multiple images in parallel with **uncapped replicas**, live **RAM / vCPU / GPU / Storage / Power / Temperature / PUE** telemetry, per-container **Eco / Balanced / Overclock** profiles, and an AE2-style **Storage Browser** tab.
+- **Overlapping Hardware Tiers (`Server Rack` — 4 Slots):**
+  - **CPUs** (`4c Edge` → `128c Quantum`), **RAM** (`4 GB DDR4` → `512 GB DDR3/DDR5 ECC`), and optional **GPUs** (`Compute` / `Datacenter` / `Tensor`).
+- **AE2-Style Drive Bay Storage & RAID (`Drive Bay` + `Ports`):**
+  - `HDD`, `SATA SSD`, and `NVMe SSD` drives with `JBOD`, `RAID 1`, and `RAID 5` fault tolerance against thermal wear + failed-drive **Salvage**.
+  - **Input Ports**, **Ghost-Whitelisted Output Ports**, and **Fluid Ports** (`64,000 mB`).
+- **Switched Hybrid Cables:** 6-way connecting cables that bridge datacenter halls *and* route FE power into your `Network Switch` & `Backup Generator` UPS banks.
+- **Active Cooling, Radiator Loops, PUE & UPS:**
+  - `Server Fans` (`+600W`) and `Watercooler Controllers` (`+4,000W` with active Water consumption; placing `Server Fans` directly adjacent forms a closed-loop radiator saving up to **75%** water) manage hall temperature (`22°C–100°C`), unlocking Cold Turbo (`+15%`), Overclock mode, and the **`-10%` FE PUE Efficiency Bonus** (`PUE ≤ 1.20`).
+  - `Backup Generator` (2×2×2 multiblock) adds a shared **`10,000,000 FE`** UPS battery buffer.
 
-Break and replace old recorder blocks from earlier versions.
+## Building & Releasing
 
-## Run the hall
-
-Place a Switch. Put the other hall blocks against the switch, or against each other: Interface, input Ports, output Ports, Server Rack, and Drive Bay.
-
-Right-click a Port to flip it between input and output. Sneak-right-click a Port to open its slot. Hoppers can insert into an input port and pull from an output port.
-
-Right-click the Server Rack and insert a Server, a CPU, and RAM. Right-click the Drive Bay and insert Images (up to six). Holding a hall part (Image, Server, CPU, RAM, HDD) inserts it; anything else, including a full hand of junk, opens the GUI. The Binder still binds.
-
-Put the ingredients in the input ports. The output ports receive the recorded results. One port holds one item type. Use more ports when the image has more ingredients or results. Right-click the Interface to pick which Image runs and read its I/O and runtime. Look at hall blocks for a one-line status. One server runs one selected Image at a time.
-
-## Requirements
-
-Java 21 JDK. Minecraft 1.21.1 runs on Java 21, and this project compiles and launches the game with a Java 21 toolchain. Gradle can start on a newer JDK. If `gradlew runClient` cannot find a JDK 21, install one or point `JAVA_HOME` at it.
-
-This project was created from the official NeoForge 1.21.1 ModDevGradle MDK.
-
-## Run the client
-
-From this folder:
-
-```bat
-gradlew runClient
+```bash
+./gradlew build
+./gradlew runClient
 ```
 
-In PowerShell:
+Pushing a tag like `v0.5.0-alpha.1` triggers `.github/workflows/release.yml` to automatically build and publish a GitHub Release with the `.jar` attached.
 
-```powershell
-.\gradlew.bat runClient
-```
+## License & Permissions
 
-The first run downloads Gradle, Minecraft, and NeoForge, so it can take a while. The game opens with this mod loaded. Look in the Hyperscale creative tab.
+**All Rights Reserved** — Copyright © 2026 `daan-vdv` & `TheDestroyer7420` (see [LICENSE](LICENSE)).
 
-## Build
-
-```bat
-gradlew build
-```
-
-The mod jar is written to `build/libs`.
+- **Modpacks:** You are welcome to include Hyperscale in CurseForge / Modrinth modpacks!
+- **Forks, Addons & Other Uses:** We are very open to granting permissions—just open a [GitHub Issue](https://github.com/daan-vdv/hyperscale/issues) or reach out and ask.

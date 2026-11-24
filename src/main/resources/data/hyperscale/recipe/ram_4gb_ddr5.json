@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["GMG", "PMP", "GRG"],
+  "key": {
+    "G": { "tag": "c:ingots/gold" },
+    "M": { "item": "hyperscale:memory_die" },
+    "P": { "item": "hyperscale:pcb" },
+    "R": { "tag": "c:dusts/redstone" }
+  },
+  "result": { "id": "hyperscale:ram_4gb_ddr5", "count": 1 }
+}

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "hyperscale:block/server_fan" },
+    "facing=east":  { "model": "hyperscale:block/server_fan", "y": 90 },
+    "facing=south": { "model": "hyperscale:block/server_fan", "y": 180 },
+    "facing=west":  { "model": "hyperscale:block/server_fan", "y": 270 }
+  }
+}

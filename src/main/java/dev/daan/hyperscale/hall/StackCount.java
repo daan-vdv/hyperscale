@@ -23,6 +23,6 @@ public record StackCount(ResourceLocation item, int count) {
     );
 
     public StackCount {
-        count = Math.max(0, count);
+        count = Math.max(1, count);
     }
 }

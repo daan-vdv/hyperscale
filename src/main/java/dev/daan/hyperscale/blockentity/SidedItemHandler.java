@@ -48,6 +48,6 @@ public final class SidedItemHandler implements IItemHandler {
 
     @Override
     public boolean isItemValid(int slot, ItemStack stack) {
-        return this.delegate.isItemValid(slot, stack);
+        return this.canInsert && this.delegate.isItemValid(slot, stack);
     }
 }

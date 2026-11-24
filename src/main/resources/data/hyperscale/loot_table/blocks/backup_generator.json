@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        },
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "hyperscale:backup_generator",
+          "properties": {
+            "ox": "0",
+            "oy": "0",
+            "oz": "0"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "hyperscale:backup_generator"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "hyperscale:blocks/backup_generator"
+}

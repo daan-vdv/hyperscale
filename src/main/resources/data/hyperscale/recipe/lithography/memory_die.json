@@ -1,0 +1,11 @@
+{
+  "type": "hyperscale:lithography",
+  "mask": { "item": "hyperscale:mask_memory" },
+  "wafer": { "item": "hyperscale:silicon_wafer" },
+  "catalyst": { "tag": "c:dusts/redstone" },
+  "catalyst_count": 2,
+  "water_mb": 0,
+  "result": { "id": "hyperscale:memory_die", "count": 2 },
+  "ticks": 80,
+  "energy": 4000
+}

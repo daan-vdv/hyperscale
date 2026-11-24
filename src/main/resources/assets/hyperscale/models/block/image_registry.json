@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "hyperscale:block/drive_bay_shell",
+    "bottom": "hyperscale:block/drive_bay_shell",
+    "side": "hyperscale:block/interface"
+  }
+}

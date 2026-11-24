@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["IGI", "GRG", "IGI"],
+  "key": {
+    "I": { "tag": "c:ingots/iron" },
+    "G": { "tag": "c:ingots/gold" },
+    "R": { "tag": "c:glass_blocks" }
+  },
+  "result": { "id": "hyperscale:mask_logic", "count": 1 }
+}

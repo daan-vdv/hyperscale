@@ -1,0 +1,18 @@
+{
+  "parent": "hyperscale:root",
+  "display": {
+    "icon": { "id": "hyperscale:lithography_etcher" },
+    "title": { "translate": "advancement.hyperscale.tier0_silicon_fab.title" },
+    "description": { "translate": "advancement.hyperscale.tier0_silicon_fab.desc" }
+  },
+  "criteria": {
+    "has_wafer_press": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:wafer_press" }] }
+    },
+    "has_lithography": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:lithography_etcher" }] }
+    }
+  }
+}

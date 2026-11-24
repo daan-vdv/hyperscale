@@ -8,10 +8,13 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.neoforge.event.level.LevelEvent;
+import net.neoforged.neoforge.event.server.ServerStoppedEvent;
 
 /**
- * While a compiler is sampling, players cannot open inventories inside its claim
- * (or the bound probes). Stops stuffing a chest the output probe would then pull.
+ * Protects active sealed compiler rooms from player tampering (right-click, block breaking,
+ * block placement) while sampling, and cleans up static registrations on world/server unload.
  */
 @EventBusSubscriber(modid = Hyperscale.MOD_ID)
 public final class ClaimAccessGuard {
@@ -29,5 +32,44 @@ public final class ClaimAccessGuard {
         if (!level.isClientSide) {
             player.displayClientMessage(Component.translatable("gui.hyperscale.recorder.status.claim_locked"), true);
         }
+    }
+
+    @SubscribeEvent
+    public static void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (!(event.getLevel() instanceof Level level)) {
+            return;
+        }
+        if (RecorderBlockEntity.blocksPlayerAccess(level, event.getPos())) {
+            event.setCanceled(true);
+            Player player = event.getPlayer();
+            if (player != null && !level.isClientSide) {
+                player.displayClientMessage(Component.translatable("gui.hyperscale.recorder.status.claim_locked"), true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onBlockPlace(BlockEvent.EntityPlaceEvent event) {
+        if (!(event.getLevel() instanceof Level level)) {
+            return;
+        }
+        if (RecorderBlockEntity.blocksPlayerAccess(level, event.getPos())) {
+            event.setCanceled(true);
+            if (event.getEntity() instanceof Player player && !level.isClientSide) {
+                player.displayClientMessage(Component.translatable("gui.hyperscale.recorder.status.claim_locked"), true);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLevelUnload(LevelEvent.Unload event) {
+        if (event.getLevel() instanceof Level level) {
+            RecorderBlockEntity.clearSamplingFor(level);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onServerStopped(ServerStoppedEvent event) {
+        RecorderBlockEntity.clearAllSampling();
     }
 }

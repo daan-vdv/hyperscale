@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["GNG", "PNP", "GRG"],
+  "key": {
+    "G": { "tag": "c:ingots/gold" },
+    "N": { "item": "hyperscale:nand_die" },
+    "P": { "item": "hyperscale:pcb" },
+    "R": { "tag": "c:dusts/redstone" }
+  },
+  "result": { "id": "hyperscale:ssd_16gb", "count": 1 }
+}

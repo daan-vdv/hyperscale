@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["IRI", "PLP", "CRC"],
+  "key": {
+    "I": { "item": "minecraft:iron_block" },
+    "R": { "item": "minecraft:redstone_block" },
+    "P": { "item": "hyperscale:pcb" },
+    "L": { "item": "hyperscale:logic_die" },
+    "C": { "item": "minecraft:copper_block" }
+  },
+  "result": { "id": "hyperscale:backup_generator", "count": 1 }
+}

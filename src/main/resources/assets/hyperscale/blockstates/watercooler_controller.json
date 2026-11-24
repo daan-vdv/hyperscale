@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "hyperscale:block/watercooler_controller" },
+    "facing=east":  { "model": "hyperscale:block/watercooler_controller", "y": 90 },
+    "facing=south": { "model": "hyperscale:block/watercooler_controller", "y": 180 },
+    "facing=west":  { "model": "hyperscale:block/watercooler_controller", "y": 270 }
+  }
+}

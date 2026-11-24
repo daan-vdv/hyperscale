@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["DAD", "AGA", "DAD"],
+  "key": {
+    "D": { "tag": "c:gems/diamond" },
+    "A": { "item": "minecraft:amethyst_shard" },
+    "G": { "tag": "c:glass_blocks" }
+  },
+  "result": { "id": "hyperscale:mask_tensor", "count": 1 }
+}

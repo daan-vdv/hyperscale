@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["STS", "GWM", "STS"],
+  "key": {
+    "S": { "item": "minecraft:netherite_scrap" },
+    "T": { "item": "hyperscale:tensor_die" },
+    "G": { "item": "hyperscale:gpu_t1" },
+    "W": { "item": "hyperscale:doped_wafer" },
+    "M": { "item": "hyperscale:ram_64gb_ddr5" }
+  },
+  "result": { "id": "hyperscale:gpu_t2", "count": 1 }
+}

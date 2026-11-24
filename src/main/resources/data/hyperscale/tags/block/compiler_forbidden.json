@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:ender_chest",
+    "minecraft:nether_portal",
+    "minecraft:end_portal",
+    { "id": "ae2:quantum_link", "required": false },
+    { "id": "ae2:quantum_ring", "required": false },
+    { "id": "ae2:wireless_access_point", "required": false },
+    { "id": "ae2:spatial_anchor", "required": false },
+    { "id": "ae2:spatial_io_port", "required": false },
+    { "id": "mekanism:quantum_entangloporter", "required": false },
+    { "id": "mekanism:teleporter", "required": false },
+    { "id": "enderstorage:ender_chest", "required": false },
+    { "id": "enderstorage:ender_tank", "required": false },
+    { "id": "dimstorage:dimensional_chest", "required": false },
+    { "id": "dimstorage:dimensional_tank", "required": false },
+    { "id": "entangled:block", "required": false },
+    { "id": "tesseract:tesseract", "required": false },
+    { "id": "laserio:laser_node", "required": false },
+    { "id": "modularrouters:modular_router", "required": false },
+    { "id": "fluxnetworks:flux_point", "required": false },
+    { "id": "fluxnetworks:flux_plug", "required": false },
+    { "id": "enderio:dimensional_transceiver", "required": false },
+    { "id": "integratedtunnels:part_interface_item", "required": false },
+    { "id": "refinedstorage:network_receiver", "required": false },
+    { "id": "refinedstorage:network_transmitter", "required": false },
+    { "id": "refinedstorage:wireless_transmitter", "required": false }
+  ]
+}

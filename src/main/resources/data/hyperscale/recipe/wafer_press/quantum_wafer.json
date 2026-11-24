@@ -1,0 +1,10 @@
+{
+  "type": "hyperscale:wafer_press",
+  "base": { "item": "hyperscale:doped_wafer" },
+  "base_count": 1,
+  "dopant": { "item": "minecraft:netherite_scrap" },
+  "dopant_count": 1,
+  "result": { "id": "hyperscale:quantum_wafer", "count": 1 },
+  "ticks": 160,
+  "energy": 40000
+}

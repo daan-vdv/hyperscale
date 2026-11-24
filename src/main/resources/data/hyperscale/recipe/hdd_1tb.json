@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["DND", "HWH", "DND"],
+  "key": {
+    "D": { "tag": "c:gems/diamond" },
+    "N": { "item": "hyperscale:nand_die" },
+    "H": { "item": "hyperscale:hdd_256gb" },
+    "W": { "item": "hyperscale:doped_wafer" }
+  },
+  "result": { "id": "hyperscale:hdd_1tb", "count": 1 }
+}

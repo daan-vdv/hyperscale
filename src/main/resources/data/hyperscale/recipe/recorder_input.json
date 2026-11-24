@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " I ",
+    "IHI",
+    " R "
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "H": { "item": "minecraft:hopper" },
+    "R": { "item": "minecraft:redstone" }
+  },
+  "result": {
+    "id": "hyperscale:recorder_input",
+    "count": 1
+  }
+}

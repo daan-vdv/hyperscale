@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["CRC", "PMP", "CRC"],
+  "key": {
+    "C": { "tag": "c:ingots/copper" },
+    "R": { "tag": "c:dusts/redstone" },
+    "P": { "item": "hyperscale:pcb" },
+    "M": { "item": "hyperscale:memory_die" }
+  },
+  "result": { "id": "hyperscale:ram_4gb_ddr4", "count": 1 }
+}

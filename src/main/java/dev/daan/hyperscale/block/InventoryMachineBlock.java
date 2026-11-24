@@ -1,7 +1,6 @@
 package dev.daan.hyperscale.block;
 
 import dev.daan.hyperscale.blockentity.InventoryBlockEntity;
-import dev.daan.hyperscale.item.BinderItem;
 import dev.daan.hyperscale.item.HallInsertables;
 import dev.daan.hyperscale.menu.StorageKind;
 import dev.daan.hyperscale.menu.StorageMenu;
@@ -35,7 +34,7 @@ public abstract class InventoryMachineBlock extends Block implements EntityBlock
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         this.open(level, pos, player);
-        return InteractionResult.SUCCESS;
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
@@ -43,21 +42,16 @@ public abstract class InventoryMachineBlock extends Block implements EntityBlock
         if (player.isShiftKeyDown()) {
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
         }
-        if (HallInsertables.isBinder(stack)) {
-            return BinderItem.apply(level, pos, player, stack)
-                    ? ItemInteractionResult.sidedSuccess(level.isClientSide)
-                    : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
         if (HallInsertables.insertsInto(this.kind, stack)) {
             if (player instanceof ServerPlayer && level.getBlockEntity(pos) instanceof InventoryBlockEntity inventory) {
-                if (!inventory.insertOne(player.getItemInHand(hand))) {
+                if (!inventory.insertOne(player.getItemInHand(hand), player.hasInfiniteMaterials())) {
                     this.open(level, pos, player);
                 }
             }
-            return ItemInteractionResult.SUCCESS;
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
         this.open(level, pos, player);
-        return ItemInteractionResult.SUCCESS;
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     protected void open(Level level, BlockPos pos, Player player) {
@@ -75,7 +69,7 @@ public abstract class InventoryMachineBlock extends Block implements EntityBlock
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof InventoryBlockEntity inventory) {
+        if (!level.isClientSide && !state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof InventoryBlockEntity inventory) {
             inventory.dropContents();
         }
         super.onRemove(state, level, pos, newState, movedByPiston);

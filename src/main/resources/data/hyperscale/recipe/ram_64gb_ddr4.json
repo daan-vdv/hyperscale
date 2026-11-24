@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["DMD", "AWA", "DPD"],
+  "key": {
+    "D": { "tag": "c:gems/diamond" },
+    "M": { "item": "hyperscale:memory_die" },
+    "A": { "item": "hyperscale:ram" },
+    "W": { "item": "hyperscale:doped_wafer" },
+    "P": { "item": "hyperscale:pcb" }
+  },
+  "result": { "id": "hyperscale:ram_64gb_ddr4", "count": 1 }
+}

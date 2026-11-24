@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["NQN", "VDV", "NEN"],
+  "key": {
+    "N": { "tag": "c:ingots/netherite" },
+    "Q": { "item": "hyperscale:quantum_die" },
+    "V": { "item": "hyperscale:nvme_64gb" },
+    "D": { "item": "hyperscale:nand_die" },
+    "E": { "item": "minecraft:diamond_block" }
+  },
+  "result": { "id": "hyperscale:nvme_256gb", "count": 1 }
+}

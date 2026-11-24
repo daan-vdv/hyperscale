@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["GNG", "HPH", "GNG"],
+  "key": {
+    "G": { "tag": "c:ingots/gold" },
+    "N": { "item": "hyperscale:nand_die" },
+    "H": { "item": "hyperscale:hdd" },
+    "P": { "item": "hyperscale:pcb" }
+  },
+  "result": { "id": "hyperscale:hdd_256gb", "count": 1 }
+}

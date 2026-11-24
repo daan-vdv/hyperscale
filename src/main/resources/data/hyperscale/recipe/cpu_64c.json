@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SLS", "CWC", "DLD"],
+  "key": {
+    "S": { "item": "minecraft:netherite_scrap" },
+    "L": { "item": "hyperscale:logic_die" },
+    "C": { "item": "hyperscale:cpu_16c" },
+    "W": { "item": "hyperscale:doped_wafer" },
+    "D": { "tag": "c:gems/diamond" }
+  },
+  "result": { "id": "hyperscale:cpu_64c", "count": 1 }
+}

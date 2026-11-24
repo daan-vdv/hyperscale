@@ -1,0 +1,20 @@
+{
+  "display": {
+    "icon": { "id": "hyperscale:interface" },
+    "title": { "translate": "advancement.hyperscale.root.title" },
+    "description": { "translate": "advancement.hyperscale.root.desc" },
+    "background": "minecraft:textures/block/deepslate_tiles.png",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "has_card_or_casing": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          { "items": ["hyperscale:empty_image_card", "hyperscale:recorder_casing", "hyperscale:recorder"] }
+        ]
+      }
+    }
+  }
+}

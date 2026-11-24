@@ -3,8 +3,11 @@ package dev.daan.hyperscale.menu;
 import dev.daan.hyperscale.blockentity.RecorderBlockEntity;
 import dev.daan.hyperscale.record.RecordPhase;
 import dev.daan.hyperscale.registry.ModBlocks;
+import dev.daan.hyperscale.registry.ModItems;
 import dev.daan.hyperscale.registry.ModMenus;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -17,6 +20,10 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 
 public class RecorderMenu extends AbstractContainerMenu {
     public static final int DATA_SIZE = 12;
+    public static final int BUTTON_START = 2;
+    public static final int BUTTON_STOP = 3;
+    public static final int BUTTON_OPEN_INPUT_BASE = 100;
+    public static final int BUTTON_OPEN_OUTPUT_BASE = 200;
 
     private final BlockPos pos;
     private final ContainerData data;
@@ -25,7 +32,7 @@ public class RecorderMenu extends AbstractContainerMenu {
         super(ModMenus.RECORDER.get(), containerId);
         this.pos = pos;
         this.data = data;
-        this.addSlot(new SlotItemHandler(handler, 0, 26, 78) {
+        this.addSlot(new SlotItemHandler(handler, 0, 26, 74) {
             @Override
             public boolean mayPickup(Player player) {
                 return !RecorderMenu.this.learning();
@@ -38,17 +45,28 @@ public class RecorderMenu extends AbstractContainerMenu {
         });
         for (int row = 0; row < 3; row++) {
             for (int column = 0; column < 9; column++) {
-                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 8 + column * 18, 124 + row * 18));
+                this.addSlot(new Slot(playerInventory, column + row * 9 + 9, 8 + column * 18, 148 + row * 18));
             }
         }
         for (int column = 0; column < 9; column++) {
-            this.addSlot(new Slot(playerInventory, column, 8 + column * 18, 182));
+            this.addSlot(new Slot(playerInventory, column, 8 + column * 18, 206));
         }
         this.addDataSlots(data);
     }
 
-    public static RecorderMenu fromBuffer(int containerId, Inventory playerInventory, net.minecraft.network.RegistryFriendlyByteBuf buffer) {
-        return new RecorderMenu(containerId, playerInventory, buffer.readBlockPos(), new ItemStackHandler(1), new SimpleContainerData(DATA_SIZE));
+    public static RecorderMenu fromBuffer(int containerId, Inventory playerInventory, RegistryFriendlyByteBuf buffer) {
+        ItemStackHandler clientHandler = new ItemStackHandler(1) {
+            @Override
+            public boolean isItemValid(int slot, ItemStack stack) {
+                return stack.is(ModItems.EMPTY_IMAGE_CARD.get());
+            }
+
+            @Override
+            public int getSlotLimit(int slot) {
+                return 1;
+            }
+        };
+        return new RecorderMenu(containerId, playerInventory, buffer.readBlockPos(), clientHandler, new SimpleContainerData(DATA_SIZE));
     }
 
     public BlockPos pos() {
@@ -63,19 +81,32 @@ public class RecorderMenu extends AbstractContainerMenu {
         return this.data.get(0) == RecordPhase.LEARNING.ordinal();
     }
 
+    public boolean sampling() {
+        return this.learning() && this.data.get(1) == 0;
+    }
+
     @Override
     public boolean clickMenuButton(Player player, int id) {
         if (!(player.level().getBlockEntity(this.pos) instanceof RecorderBlockEntity recorder)) {
             return false;
         }
-        switch (id) {
-            case 2 -> recorder.startOrContinue();
-            case 3 -> recorder.stop();
-            default -> {
-                return false;
+        if (id == BUTTON_START) {
+            recorder.startOrContinue();
+            return true;
+        }
+        if (id == BUTTON_STOP) {
+            recorder.stop();
+            return true;
+        }
+        if (player instanceof ServerPlayer serverPlayer) {
+            if (id >= BUTTON_OPEN_INPUT_BASE && id < BUTTON_OPEN_OUTPUT_BASE) {
+                return recorder.openRemoteProbe(serverPlayer, true, id - BUTTON_OPEN_INPUT_BASE);
+            }
+            if (id >= BUTTON_OPEN_OUTPUT_BASE && id < BUTTON_OPEN_OUTPUT_BASE + 100) {
+                return recorder.openRemoteProbe(serverPlayer, false, id - BUTTON_OPEN_OUTPUT_BASE);
             }
         }
-        return true;
+        return false;
     }
 
     @Override
@@ -87,16 +118,16 @@ public class RecorderMenu extends AbstractContainerMenu {
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
         Slot slot = this.slots.get(index);
-        if (!slot.hasItem()) {
+        if (!slot.hasItem() || !slot.mayPickup(player)) {
             return ItemStack.EMPTY;
         }
         ItemStack stack = slot.getItem();
         ItemStack copy = stack.copy();
         if (index == 0) {
-            if (!this.moveItemStackTo(stack, 1, this.slots.size(), true)) {
+            if (this.learning() || !this.moveItemStackTo(stack, 1, this.slots.size(), true)) {
                 return ItemStack.EMPTY;
             }
-        } else if (!this.moveItemStackTo(stack, 0, 1, false)) {
+        } else if (this.learning() || !this.moveItemStackTo(stack, 0, 1, false)) {
             return ItemStack.EMPTY;
         }
         if (stack.isEmpty()) {

@@ -1,0 +1,14 @@
+{
+  "parent": "hyperscale:tier1_homelab",
+  "display": {
+    "icon": { "id": "hyperscale:drive_bay" },
+    "title": { "translate": "advancement.hyperscale.tier1_storage.title" },
+    "description": { "translate": "advancement.hyperscale.tier1_storage.desc" }
+  },
+  "criteria": {
+    "has_drive_bay": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:drive_bay" }] }
+    }
+  }
+}

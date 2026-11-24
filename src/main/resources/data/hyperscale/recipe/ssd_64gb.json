@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["DND", "SWS", "DND"],
+  "key": {
+    "D": { "tag": "c:gems/diamond" },
+    "N": { "item": "hyperscale:nand_die" },
+    "S": { "item": "hyperscale:ssd_16gb" },
+    "W": { "item": "hyperscale:doped_wafer" }
+  },
+  "result": { "id": "hyperscale:ssd_64gb", "count": 1 }
+}

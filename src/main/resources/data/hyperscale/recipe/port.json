@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IRI",
+    "IHI",
+    "III"
+  ],
+  "key": {
+    "I": { "item": "minecraft:iron_ingot" },
+    "R": { "item": "minecraft:redstone" },
+    "H": { "item": "minecraft:hopper" }
+  },
+  "result": {
+    "id": "hyperscale:port",
+    "count": 1
+  }
+}

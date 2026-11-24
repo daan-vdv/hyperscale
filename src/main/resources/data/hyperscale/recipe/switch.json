@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["ICI", "LPL", "IRI"],
+  "key": {
+    "I": { "item": "minecraft:iron_block" },
+    "C": { "item": "minecraft:copper_block" },
+    "L": { "item": "hyperscale:logic_die" },
+    "P": { "item": "hyperscale:pcb" },
+    "R": { "item": "minecraft:redstone_block" }
+  },
+  "result": { "id": "hyperscale:switch", "count": 1 }
+}

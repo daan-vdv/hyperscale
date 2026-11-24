@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["IBI", "IPI", "IBI"],
+  "key": {
+    "I": { "item": "minecraft:iron_block" },
+    "B": { "item": "minecraft:iron_bars" },
+    "P": { "item": "hyperscale:pcb" }
+  },
+  "result": { "id": "hyperscale:server_rack", "count": 1 }
+}

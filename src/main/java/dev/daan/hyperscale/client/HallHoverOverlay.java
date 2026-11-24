@@ -4,6 +4,7 @@ import dev.daan.hyperscale.Hyperscale;
 import dev.daan.hyperscale.hall.HallStatus;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -14,20 +15,35 @@ import net.neoforged.neoforge.client.event.RenderGuiEvent;
 
 @EventBusSubscriber(modid = Hyperscale.MOD_ID, value = Dist.CLIENT)
 public final class HallHoverOverlay {
+    private static final long CACHE_TICKS = 5L;
+
+    private static BlockPos cachedPos;
+    private static long cachedTick = Long.MIN_VALUE;
+    private static Component cachedLine;
+
     private HallHoverOverlay() {
     }
 
     @SubscribeEvent
     public static void onRenderGui(RenderGuiEvent.Post event) {
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.player == null || minecraft.level == null || minecraft.screen != null) {
+        if (minecraft.player == null || minecraft.level == null || minecraft.screen != null || minecraft.options.hideGui) {
             return;
         }
         HitResult hit = minecraft.hitResult;
         if (!(hit instanceof BlockHitResult blockHit) || hit.getType() != HitResult.Type.BLOCK) {
+            cachedPos = null;
+            cachedLine = null;
             return;
         }
-        Component line = HallStatus.hover(minecraft.level, blockHit.getBlockPos());
+        BlockPos pos = blockHit.getBlockPos();
+        long now = minecraft.level.getGameTime();
+        if (!pos.equals(cachedPos) || now - cachedTick >= CACHE_TICKS || now < cachedTick) {
+            cachedPos = pos.immutable();
+            cachedTick = now;
+            cachedLine = HallStatus.hover(minecraft.level, pos);
+        }
+        Component line = cachedLine;
         if (line == null) {
             return;
         }

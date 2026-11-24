@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["SMS", "AWA", "DMD"],
+  "key": {
+    "S": { "item": "minecraft:netherite_scrap" },
+    "M": { "item": "hyperscale:memory_die" },
+    "A": { "item": "hyperscale:ram_64gb_ddr5" },
+    "W": { "item": "hyperscale:doped_wafer" },
+    "D": { "tag": "c:gems/diamond" }
+  },
+  "result": { "id": "hyperscale:ram_256gb_ddr5", "count": 1 }
+}

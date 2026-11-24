@@ -1,0 +1,11 @@
+{
+  "type": "hyperscale:lithography",
+  "mask": { "item": "hyperscale:mask_logic" },
+  "wafer": { "item": "hyperscale:silicon_wafer" },
+  "catalyst": { "tag": "c:ingots/copper" },
+  "catalyst_count": 2,
+  "water_mb": 0,
+  "result": { "id": "hyperscale:logic_die", "count": 2 },
+  "ticks": 80,
+  "energy": 4000
+}

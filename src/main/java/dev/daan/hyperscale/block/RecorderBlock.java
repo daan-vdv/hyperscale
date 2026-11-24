@@ -1,6 +1,7 @@
 package dev.daan.hyperscale.block;
 
 import dev.daan.hyperscale.blockentity.RecorderBlockEntity;
+import dev.daan.hyperscale.item.BinderItem;
 import dev.daan.hyperscale.menu.RecorderMenu;
 import dev.daan.hyperscale.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -25,12 +26,16 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
 public class RecorderBlock extends Block implements EntityBlock {
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+
     public RecorderBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(ProbeBlock.FACING, Direction.NORTH));
+        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
     @Override
@@ -39,22 +44,22 @@ public class RecorderBlock extends Block implements EntityBlock {
         if (context.getPlayer() != null && context.getPlayer().isShiftKeyDown()) {
             facing = facing.getOpposite();
         }
-        return this.defaultBlockState().setValue(ProbeBlock.FACING, facing);
+        return this.defaultBlockState().setValue(FACING, facing);
     }
 
     @Override
     protected BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(ProbeBlock.FACING, rotation.rotate(state.getValue(ProbeBlock.FACING)));
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
     protected BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(ProbeBlock.FACING)));
+        return state.rotate(mirror.getRotation(state.getValue(FACING)));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(ProbeBlock.FACING);
+        builder.add(FACING);
     }
 
     @Override
@@ -76,21 +81,22 @@ public class RecorderBlock extends Block implements EntityBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        if (dev.daan.hyperscale.item.BinderItem.apply(level, pos, player, stack)) {
+        if (BinderItem.apply(level, pos, player, stack)) {
             return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
-        this.open(level, pos, player);
-        return ItemInteractionResult.SUCCESS;
+        open(level, pos, player);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-        this.open(level, pos, player);
-        return InteractionResult.SUCCESS;
+        open(level, pos, player);
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private void open(Level level, BlockPos pos, Player player) {
+    public static void open(Level level, BlockPos pos, Player player) {
         if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof RecorderBlockEntity recorder) {
+            recorder.scanSealedRoom();
             serverPlayer.openMenu(new SimpleMenuProvider(
                     (containerId, inventory, ignored) -> new RecorderMenu(containerId, inventory, pos, recorder.items(), recorderData(recorder)),
                     Component.translatable("block.hyperscale.recorder")
@@ -118,7 +124,7 @@ public class RecorderBlock extends Block implements EntityBlock {
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof RecorderBlockEntity recorder) {
+        if (!level.isClientSide && !state.is(newState.getBlock()) && level.getBlockEntity(pos) instanceof RecorderBlockEntity recorder) {
             recorder.release();
             recorder.dropContents();
         }

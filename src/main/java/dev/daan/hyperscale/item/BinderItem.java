@@ -73,12 +73,12 @@ public class BinderItem extends Item {
             return;
         }
         BlockPos compilerPos = target.pos();
-        if (!(level.getBlockEntity(compilerPos) instanceof RecorderBlockEntity recorder)) {
-            player.displayClientMessage(Component.translatable("message.hyperscale.binder.missing_compiler"), true);
-            return;
-        }
         if (compilerPos.distManhattan(probe.getBlockPos()) > RecordLimits.MAX_BIND_DISTANCE) {
             player.displayClientMessage(Component.translatable("message.hyperscale.binder.too_far"), true);
+            return;
+        }
+        if (!level.isLoaded(compilerPos) || !(level.getBlockEntity(compilerPos) instanceof RecorderBlockEntity recorder)) {
+            player.displayClientMessage(Component.translatable("message.hyperscale.binder.missing_compiler"), true);
             return;
         }
         if (recorder.isLearning()) {
@@ -94,7 +94,14 @@ public class BinderItem extends Item {
 
     private static void unbind(Level level, ProbeBlockEntity probe, Player player) {
         BlockPos compilerPos = probe.compiler();
-        if (compilerPos != null && level.getBlockEntity(compilerPos) instanceof RecorderBlockEntity recorder) {
+        if (compilerPos == null) {
+            return;
+        }
+        if (level.isLoaded(compilerPos) && level.getBlockEntity(compilerPos) instanceof RecorderBlockEntity recorder) {
+            if (recorder.isLearning()) {
+                player.displayClientMessage(Component.translatable("message.hyperscale.binder.busy"), true);
+                return;
+            }
             recorder.unbindProbe(probe.getBlockPos());
         } else {
             probe.clearCompiler();

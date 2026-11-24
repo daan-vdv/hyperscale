@@ -1,0 +1,10 @@
+{
+  "type": "hyperscale:wafer_press",
+  "base": { "item": "hyperscale:silicon_wafer" },
+  "base_count": 1,
+  "dopant": { "tag": "c:gems/diamond" },
+  "dopant_count": 1,
+  "result": { "id": "hyperscale:doped_wafer", "count": 1 },
+  "ticks": 100,
+  "energy": 12000
+}

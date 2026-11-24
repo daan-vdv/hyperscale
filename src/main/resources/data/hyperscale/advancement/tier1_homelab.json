@@ -1,0 +1,18 @@
+{
+  "parent": "hyperscale:tier0_first_image",
+  "display": {
+    "icon": { "id": "hyperscale:server_rack" },
+    "title": { "translate": "advancement.hyperscale.tier1_homelab.title" },
+    "description": { "translate": "advancement.hyperscale.tier1_homelab.desc" }
+  },
+  "criteria": {
+    "has_rack": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:server_rack" }] }
+    },
+    "has_switch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:switch" }] }
+    }
+  }
+}

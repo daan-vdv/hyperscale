@@ -11,9 +11,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import dev.daan.hyperscale.HyperscaleConfig;
+import dev.daan.hyperscale.block.ProbeBlock;
 import dev.daan.hyperscale.block.ProbeMode;
+import dev.daan.hyperscale.block.RecorderBlock;
 import dev.daan.hyperscale.hall.ProcessImage;
+import dev.daan.hyperscale.menu.StorageKind;
+import dev.daan.hyperscale.menu.StorageMenu;
 import dev.daan.hyperscale.record.ClaimScanner;
+import dev.daan.hyperscale.record.ClaimSnapshot;
 import dev.daan.hyperscale.record.ItemTotals;
 import dev.daan.hyperscale.record.RecordLimits;
 import dev.daan.hyperscale.record.RecordPhase;
@@ -22,21 +28,26 @@ import dev.daan.hyperscale.registry.ModBlockEntities;
 import dev.daan.hyperscale.registry.ModDataComponents;
 import dev.daan.hyperscale.registry.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 public class RecorderBlockEntity extends InventoryBlockEntity {
+    private static final int SNAPSHOT_INTERVAL = 4;
     private static final Set<RecorderBlockEntity> SAMPLING = Collections.newSetFromMap(new ConcurrentHashMap<>());
 
     private RecordPhase phase = RecordPhase.IDLE;
@@ -44,8 +55,12 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
     private String detail = "";
     private int matched;
     private int tickSum;
+    private long energySum;
+    private long patternEnergy = -1L;
+    private long cycleEnergy;
     private int runTicks;
     private int settleTicks;
+    private int driftTicks;
     private boolean awaitingContinue;
     private boolean resumed;
     private int width;
@@ -53,16 +68,27 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
     private int depth;
     private int inventoryCount;
     private boolean hasBox;
-    private BlockPos boxMin = BlockPos.ZERO;
-    private BlockPos boxMax = BlockPos.ZERO;
+    private BlockPos outerMin = BlockPos.ZERO;
+    private BlockPos outerMax = BlockPos.ZERO;
+    private BlockPos innerMin = BlockPos.ZERO;
+    private BlockPos innerMax = BlockPos.ZERO;
     private final List<BlockPos> inputs = new ArrayList<>();
     private final List<BlockPos> outputs = new ArrayList<>();
+    private final List<BlockPos> fluidInputs = new ArrayList<>();
+    private final List<BlockPos> fluidOutputs = new ArrayList<>();
+    private final List<BlockPos> powerPorts = new ArrayList<>();
     private final Set<BlockPos> inventories = new HashSet<>();
-    private final Map<ResourceLocation, Integer> baseline = new HashMap<>();
+    private final Set<BlockPos> energyBlocks = new HashSet<>();
+    private final Set<BlockPos> fluidBlocks = new HashSet<>();
+    private ClaimSnapshot baselineSnapshot = ClaimSnapshot.EMPTY;
     private final Map<ResourceLocation, Integer> patternInputs = new HashMap<>();
     private final Map<ResourceLocation, Integer> patternOutputs = new HashMap<>();
     private final Map<ResourceLocation, Integer> cycleInputs = new HashMap<>();
     private final Map<ResourceLocation, Integer> cycleOutputs = new HashMap<>();
+    private final Map<ResourceLocation, Integer> patternFluidInputs = new HashMap<>();
+    private final Map<ResourceLocation, Integer> patternFluidOutputs = new HashMap<>();
+    private final Map<ResourceLocation, Integer> cycleFluidInputs = new HashMap<>();
+    private final Map<ResourceLocation, Integer> cycleFluidOutputs = new HashMap<>();
 
     public RecorderBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.RECORDER.get(), pos, state, 1);
@@ -80,6 +106,14 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
 
     public static void serverTick(RecorderBlockEntity recorder) {
         recorder.tickServer();
+    }
+
+    public static void clearSamplingFor(Level level) {
+        SAMPLING.removeIf(recorder -> recorder.getLevel() == level);
+    }
+
+    public static void clearAllSampling() {
+        SAMPLING.clear();
     }
 
     public boolean isLearning() {
@@ -103,24 +137,29 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         return this.isSampling() && this.inventories.contains(pos);
     }
 
-    public boolean inClaimBox(BlockPos pos) {
+    public boolean isClaimFluidBlock(BlockPos pos) {
+        return this.isSampling() && this.fluidBlocks.contains(pos);
+    }
+
+    public boolean inOuterBox(BlockPos pos) {
         if (!this.hasBox) {
             return false;
         }
-        return pos.getX() >= this.boxMin.getX() && pos.getX() <= this.boxMax.getX()
-                && pos.getY() >= this.boxMin.getY() && pos.getY() <= this.boxMax.getY()
-                && pos.getZ() >= this.boxMin.getZ() && pos.getZ() <= this.boxMax.getZ();
+        return pos.getX() >= this.outerMin.getX() && pos.getX() <= this.outerMax.getX()
+                && pos.getY() >= this.outerMin.getY() && pos.getY() <= this.outerMax.getY()
+                && pos.getZ() >= this.outerMin.getZ() && pos.getZ() <= this.outerMax.getZ();
     }
 
-    /** Sealed during sampling: claim box + bound probes, but not the compiler itself. */
+    /** Sealed during sampling: entire casing shell + interior + bound probes, but not the compiler itself. */
     public boolean blocksAccess(BlockPos pos) {
         if (!this.isSampling() || pos.equals(this.worldPosition)) {
             return false;
         }
-        if (this.inputs.contains(pos) || this.outputs.contains(pos)) {
+        if (this.inputs.contains(pos) || this.outputs.contains(pos)
+                || this.fluidInputs.contains(pos) || this.fluidOutputs.contains(pos)) {
             return true;
         }
-        return this.inClaimBox(pos);
+        return this.inOuterBox(pos);
     }
 
     private void refreshSamplingRegistration() {
@@ -158,11 +197,48 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
     }
 
     public int boundInputs() {
-        return this.inputs.size();
+        return this.inputs.size() + this.fluidInputs.size();
     }
 
     public int boundOutputs() {
-        return this.outputs.size();
+        return this.outputs.size() + this.fluidOutputs.size();
+    }
+
+    public List<BlockPos> inputPositions() {
+        return Collections.unmodifiableList(this.inputs);
+    }
+
+    public List<BlockPos> outputPositions() {
+        return Collections.unmodifiableList(this.outputs);
+    }
+
+    public boolean hasBox() {
+        return this.hasBox;
+    }
+
+    public BlockPos innerMin() {
+        return this.innerMin;
+    }
+
+    public BlockPos innerMax() {
+        return this.innerMax;
+    }
+
+    public static Component describeProbeTarget(Level level, BlockPos probePos) {
+        if (level == null || probePos == null || !level.isLoaded(probePos)) {
+            return Component.translatable("gui.hyperscale.recorder.probe_none");
+        }
+        BlockState probeState = level.getBlockState(probePos);
+        if (!probeState.hasProperty(ProbeBlock.FACING)) {
+            return Component.translatable("gui.hyperscale.recorder.probe_none");
+        }
+        Direction facing = probeState.getValue(ProbeBlock.FACING);
+        BlockPos targetPos = probePos.relative(facing.getOpposite());
+        Component blockName = level.isLoaded(targetPos)
+                ? level.getBlockState(targetPos).getBlock().getName()
+                : Component.translatable("gui.hyperscale.recorder.probe_none");
+        Component faceName = Component.translatable("gui.hyperscale.face." + facing.getSerializedName());
+        return Component.translatable("gui.hyperscale.recorder.probe_target", blockName, faceName);
     }
 
     public int data(int index) {
@@ -175,7 +251,7 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
             case 5 -> this.height;
             case 6 -> this.depth;
             case 7 -> this.status.ordinal();
-            case 8 -> this.runTicks;
+            case 8 -> Math.min(Short.MAX_VALUE, this.runTicks);
             case 9 -> this.settleTicks;
             case 10 -> this.inputs.size();
             case 11 -> this.outputs.size();
@@ -183,15 +259,159 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         };
     }
 
+    /**
+     * Scans the sealed casing room (when not actively sampling) so the Compiler GUI knows which
+     * interior Input/Output probes and wall Power Ports are attached.
+     */
+    public void scanSealedRoom() {
+        if (this.level == null || this.level.isClientSide || this.isSampling()) {
+            return;
+        }
+        Direction facing = this.getBlockState().getValue(RecorderBlock.FACING);
+        ClaimScanner.SealedResult result = ClaimScanner.buildSealed(this.level, this.worldPosition, facing);
+        if (result.claim() == null) {
+            return;
+        }
+        this.applySealedClaim(result.claim());
+        this.sync();
+    }
+
+    public boolean openRemoteProbe(ServerPlayer player, boolean input, int index) {
+        if (this.level == null || this.level.isClientSide || this.isSampling()) {
+            return false;
+        }
+        List<BlockPos> list = input ? this.inputs : this.outputs;
+        if (index < 0 || index >= list.size()) {
+            return false;
+        }
+        BlockPos probePos = list.get(index);
+        if (!this.level.isLoaded(probePos) || !(this.level.getBlockEntity(probePos) instanceof ProbeBlockEntity probe)) {
+            return false;
+        }
+        Component prefix = Component.translatable(
+                input ? "gui.hyperscale.recorder.probe_input" : "gui.hyperscale.recorder.probe_output",
+                index + 1
+        );
+        Component title = Component.translatable(
+                "gui.hyperscale.recorder.probe_title",
+                prefix,
+                describeProbeTarget(this.level, probePos)
+        );
+        BlockPos compilerPos = this.worldPosition;
+        player.openMenu(new SimpleMenuProvider(
+                (containerId, inventory, ignored) -> new StorageMenu(containerId, inventory, probePos, compilerPos, probe.items(), StorageKind.PROBE),
+                title
+        ), buffer -> {
+            buffer.writeBlockPos(probePos);
+            buffer.writeBlockPos(compilerPos);
+        });
+        return true;
+    }
+
+    private void applySealedClaim(ClaimScanner.Claim claim) {
+        this.unbindAllProbes();
+        this.inventories.clear();
+        this.inventories.addAll(claim.inventories());
+        this.energyBlocks.clear();
+        this.energyBlocks.addAll(claim.energyBlocks());
+        this.fluidBlocks.clear();
+        this.fluidBlocks.addAll(claim.fluidBlocks());
+        this.width = claim.width();
+        this.height = claim.height();
+        this.depth = claim.depth();
+        this.inventoryCount = this.inventories.size();
+        this.hasBox = true;
+        this.outerMin = claim.outerMin();
+        this.outerMax = claim.outerMax();
+        this.innerMin = claim.innerMin();
+        this.innerMax = claim.innerMax();
+
+        for (BlockPos pos : claim.inputs()) {
+            this.bindInternal(pos, ProbeMode.INPUT);
+        }
+        for (BlockPos pos : claim.outputs()) {
+            this.bindInternal(pos, ProbeMode.OUTPUT);
+        }
+        for (BlockPos pos : claim.fluidInputs()) {
+            this.bindFluidInternal(pos, ProbeMode.INPUT);
+        }
+        for (BlockPos pos : claim.fluidOutputs()) {
+            this.bindFluidInternal(pos, ProbeMode.OUTPUT);
+        }
+        for (BlockPos pos : claim.powerPorts()) {
+            if (this.level != null && this.level.isLoaded(pos)
+                    && this.level.getBlockEntity(pos) instanceof PowerPortBlockEntity powerPort) {
+                powerPort.setCompiler(this.worldPosition);
+                this.powerPorts.add(pos.immutable());
+            }
+        }
+    }
+
+    private void bindInternal(BlockPos probePos, ProbeMode expectedMode) {
+        if (this.level == null || !this.level.isLoaded(probePos)
+                || !(this.level.getBlockEntity(probePos) instanceof ProbeBlockEntity probe)
+                || probe.mode() != expectedMode) {
+            return;
+        }
+        if (probe.compiler() != null && !probe.compiler().equals(this.worldPosition)) {
+            if (this.level.isLoaded(probe.compiler())
+                    && this.level.getBlockEntity(probe.compiler()) instanceof RecorderBlockEntity other) {
+                other.unbindProbe(probePos);
+            }
+        }
+        if (expectedMode == ProbeMode.INPUT) {
+            this.inputs.add(probePos.immutable());
+        } else {
+            this.outputs.add(probePos.immutable());
+        }
+        probe.setCompiler(this.worldPosition);
+    }
+
+    private void bindFluidInternal(BlockPos probePos, ProbeMode expectedMode) {
+        if (this.level == null || !this.level.isLoaded(probePos)
+                || !(this.level.getBlockEntity(probePos) instanceof FluidProbeBlockEntity probe)
+                || probe.mode() != expectedMode) {
+            return;
+        }
+        if (probe.compiler() != null && !probe.compiler().equals(this.worldPosition)) {
+            if (this.level.isLoaded(probe.compiler())
+                    && this.level.getBlockEntity(probe.compiler()) instanceof RecorderBlockEntity other) {
+                other.unbindFluidProbe(probePos);
+            }
+        }
+        if (expectedMode == ProbeMode.INPUT) {
+            this.fluidInputs.add(probePos.immutable());
+        } else {
+            this.fluidOutputs.add(probePos.immutable());
+        }
+        probe.setCompiler(this.worldPosition);
+    }
+
+    public void unbindFluidProbe(BlockPos probePos) {
+        this.fluidInputs.remove(probePos);
+        this.fluidOutputs.remove(probePos);
+        if (this.level != null && this.level.isLoaded(probePos)
+                && this.level.getBlockEntity(probePos) instanceof FluidProbeBlockEntity probe
+                && this.worldPosition.equals(probe.compiler())) {
+            probe.clearCompiler();
+        }
+        if (this.phase == RecordPhase.LEARNING) {
+            this.fail(RecordStatus.LOST_BIND);
+        } else {
+            this.sync();
+        }
+    }
+
     public boolean bindProbe(BlockPos probePos) {
-        if (this.level == null || this.phase == RecordPhase.LEARNING) {
+        if (this.level == null || this.phase == RecordPhase.LEARNING || !this.level.isLoaded(probePos)) {
             return false;
         }
         if (!(this.level.getBlockEntity(probePos) instanceof ProbeBlockEntity probe)) {
             return false;
         }
         if (probe.compiler() != null && !probe.compiler().equals(this.worldPosition)) {
-            if (this.level.getBlockEntity(probe.compiler()) instanceof RecorderBlockEntity other) {
+            if (this.level.isLoaded(probe.compiler())
+                    && this.level.getBlockEntity(probe.compiler()) instanceof RecorderBlockEntity other) {
                 other.unbindProbe(probePos);
             }
         }
@@ -210,7 +430,8 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
     public void unbindProbe(BlockPos probePos) {
         this.inputs.remove(probePos);
         this.outputs.remove(probePos);
-        if (this.level != null && this.level.getBlockEntity(probePos) instanceof ProbeBlockEntity probe
+        if (this.level != null && this.level.isLoaded(probePos)
+                && this.level.getBlockEntity(probePos) instanceof ProbeBlockEntity probe
                 && this.worldPosition.equals(probe.compiler())) {
             probe.clearCompiler();
         }
@@ -218,6 +439,51 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
             this.fail(RecordStatus.LOST_BIND);
         } else {
             this.sync();
+        }
+    }
+
+    private void unbindAllProbes() {
+        if (this.level != null) {
+            for (BlockPos pos : this.inputs) {
+                this.clearProbeCompiler(pos);
+            }
+            for (BlockPos pos : this.outputs) {
+                this.clearProbeCompiler(pos);
+            }
+            for (BlockPos pos : this.fluidInputs) {
+                this.clearFluidProbeCompiler(pos);
+            }
+            for (BlockPos pos : this.fluidOutputs) {
+                this.clearFluidProbeCompiler(pos);
+            }
+            for (BlockPos pos : this.powerPorts) {
+                if (this.level.isLoaded(pos)
+                        && this.level.getBlockEntity(pos) instanceof PowerPortBlockEntity powerPort
+                        && this.worldPosition.equals(powerPort.compiler())) {
+                    powerPort.clearCompiler();
+                }
+            }
+        }
+        this.inputs.clear();
+        this.outputs.clear();
+        this.fluidInputs.clear();
+        this.fluidOutputs.clear();
+        this.powerPorts.clear();
+    }
+
+    private void clearFluidProbeCompiler(BlockPos pos) {
+        if (this.level != null && this.level.isLoaded(pos)
+                && this.level.getBlockEntity(pos) instanceof FluidProbeBlockEntity probe
+                && this.worldPosition.equals(probe.compiler())) {
+            probe.clearCompiler();
+        }
+    }
+
+    private void clearProbeCompiler(BlockPos pos) {
+        if (this.level != null && this.level.isLoaded(pos)
+                && this.level.getBlockEntity(pos) instanceof ProbeBlockEntity probe
+                && this.worldPosition.equals(probe.compiler())) {
+            probe.clearCompiler();
         }
     }
 
@@ -238,6 +504,25 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         }
         ItemTotals.add(input ? this.cycleInputs : this.cycleOutputs, stack);
         this.settleTicks = 0;
+        this.driftTicks = 0;
+    }
+
+    public void recordFluidTransfer(boolean input, FluidStack stack) {
+        if (!this.isSampling() || stack.isEmpty()) {
+            return;
+        }
+        ItemTotals.addFluid(input ? this.cycleFluidInputs : this.cycleFluidOutputs, stack);
+        this.settleTicks = 0;
+        this.driftTicks = 0;
+    }
+
+    public void recordEnergy(int amount) {
+        if (!this.isSampling() || amount <= 0) {
+            return;
+        }
+        this.cycleEnergy += amount;
+        this.settleTicks = 0;
+        this.driftTicks = 0;
     }
 
     public void startOrContinue() {
@@ -263,45 +548,53 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
             this.setStatus(RecordStatus.NEED_EMPTY, "");
             return;
         }
-        if (!this.refreshBinds()) {
+
+        Direction facing = this.getBlockState().getValue(RecorderBlock.FACING);
+        ClaimScanner.SealedResult sealed = ClaimScanner.buildSealed(this.level, this.worldPosition, facing);
+        if (sealed.claim() == null) {
             this.phase = RecordPhase.FAILED;
-            this.setStatus(RecordStatus.LOST_BIND, "");
+            this.setStatus(sealed.error() != null ? sealed.error() : RecordStatus.NO_CASING, sealed.detail());
             return;
         }
-        if (this.inputs.isEmpty() || this.outputs.isEmpty()) {
+
+        this.applySealedClaim(sealed.claim());
+        if (this.boundInputs() == 0 || this.boundOutputs() == 0) {
             this.phase = RecordPhase.FAILED;
             this.setStatus(RecordStatus.NEED_BIND, "");
             return;
         }
-
-        List<BlockPos> terminals = new ArrayList<>(this.inputs);
-        terminals.addAll(this.outputs);
-        ClaimScanner.Claim claim = ClaimScanner.build(this.level, terminals);
-        if (claim == null) {
+        if (!this.inputsHaveItems()) {
             this.phase = RecordPhase.FAILED;
-            this.setStatus(RecordStatus.TOO_LARGE, "");
+            this.setStatus(RecordStatus.NEED_ITEMS, "");
             return;
         }
 
-        this.inventories.clear();
-        this.inventories.addAll(claim.inventories());
-        this.width = claim.width();
-        this.height = claim.height();
-        this.depth = claim.depth();
-        this.inventoryCount = this.inventories.size();
-        this.hasBox = true;
-        this.boxMin = claim.min();
-        this.boxMax = claim.max();
         this.patternInputs.clear();
         this.patternOutputs.clear();
+        this.patternFluidInputs.clear();
+        this.patternFluidOutputs.clear();
         this.matched = 0;
         this.tickSum = 0;
+        this.energySum = 0L;
+        this.patternEnergy = -1L;
         this.phase = RecordPhase.LEARNING;
         this.beginRun();
     }
 
     private void beginRun() {
         if (this.level == null || this.phase != RecordPhase.LEARNING) {
+            return;
+        }
+        if (!this.hasBox || !ClaimScanner.isShellIntact(this.level, this.outerMin, this.outerMax, this.worldPosition)) {
+            this.fail(RecordStatus.SEAL_BROKEN);
+            return;
+        }
+        if (ClaimScanner.hasPlayerInside(this.level, this.innerMin, this.innerMax)) {
+            this.fail(RecordStatus.PLAYER_INSIDE);
+            return;
+        }
+        if (ClaimScanner.hasContainerEntityInside(this.level, this.innerMin, this.innerMax)) {
+            this.fail(RecordStatus.ENTITY_INSIDE);
             return;
         }
         if (!this.refreshBinds()) {
@@ -313,15 +606,42 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
             this.setStatus(RecordStatus.NEED_ITEMS, "");
             return;
         }
-        this.baseline.clear();
-        this.baseline.putAll(ItemTotals.snapshot(this.level, this.inventories));
+        this.resetProbeCooldowns();
+        this.baselineSnapshot = ClaimSnapshot.capture(this.level, this.inventories, this.energyBlocks, this.fluidBlocks, this.innerMin, this.innerMax);
         this.clearCycle();
         this.awaitingContinue = false;
         this.runTicks = 0;
         this.settleTicks = 0;
+        this.driftTicks = 0;
         this.refreshSamplingRegistration();
         this.setStatus(RecordStatus.SAMPLING, "");
-        this.drawFrame();
+        this.drawCorners();
+    }
+
+    private void resetProbeCooldowns() {
+        if (this.level == null) {
+            return;
+        }
+        for (BlockPos pos : this.inputs) {
+            if (this.level.isLoaded(pos) && this.level.getBlockEntity(pos) instanceof ProbeBlockEntity probe) {
+                probe.resetCooldown();
+            }
+        }
+        for (BlockPos pos : this.outputs) {
+            if (this.level.isLoaded(pos) && this.level.getBlockEntity(pos) instanceof ProbeBlockEntity probe) {
+                probe.resetCooldown();
+            }
+        }
+        for (BlockPos pos : this.fluidInputs) {
+            if (this.level.isLoaded(pos) && this.level.getBlockEntity(pos) instanceof FluidProbeBlockEntity probe) {
+                probe.resetCooldown();
+            }
+        }
+        for (BlockPos pos : this.fluidOutputs) {
+            if (this.level.isLoaded(pos) && this.level.getBlockEntity(pos) instanceof FluidProbeBlockEntity probe) {
+                probe.resetCooldown();
+            }
+        }
     }
 
     private void tickServer() {
@@ -330,7 +650,7 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         }
         if (!this.resumed) {
             this.resumed = true;
-            if (this.phase == RecordPhase.LEARNING) {
+            if (this.phase == RecordPhase.LEARNING && !this.awaitingContinue) {
                 this.awaitingContinue = false;
                 this.clearCycle();
                 this.phase = RecordPhase.IDLE;
@@ -340,33 +660,48 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         if (this.phase != RecordPhase.LEARNING || this.awaitingContinue) {
             return;
         }
-        // Hoppers ignore item entities with pickup delay > 0 — keep refreshing so Q-drops
-        // cannot be vacuumed into claim inventories (droppers/chests) mid-run.
-        this.sealDroppedItems();
-        if (this.level.getGameTime() % 20L == 0L) {
+        if (this.runTicks % 10 == 0) {
+            if (!this.hasBox || !ClaimScanner.isShellIntact(this.level, this.outerMin, this.outerMax, this.worldPosition)) {
+                this.fail(RecordStatus.SEAL_BROKEN);
+                return;
+            }
+            if (ClaimScanner.hasPlayerInside(this.level, this.innerMin, this.innerMax)) {
+                this.fail(RecordStatus.PLAYER_INSIDE);
+                return;
+            }
+            if (ClaimScanner.hasContainerEntityInside(this.level, this.innerMin, this.innerMax)) {
+                this.fail(RecordStatus.ENTITY_INSIDE);
+                return;
+            }
             if (!this.refreshBinds()) {
                 this.fail(RecordStatus.LOST_BIND);
                 return;
             }
-            this.drawFrame();
         }
         this.runTicks++;
-        if (this.inputsEmpty()) {
-            ResourceLocation drift = ItemTotals.firstDiff(this.baseline, ItemTotals.snapshot(this.level, this.inventories));
-            if (drift == null) {
-                this.settleTicks++;
-                if (this.settleTicks >= RecordLimits.SETTLE_TICKS) {
-                    this.closeRun();
-                    return;
+        if (this.runTicks % SNAPSHOT_INTERVAL == 0) {
+            if (this.inputsEmpty()) {
+                ClaimSnapshot now = ClaimSnapshot.capture(this.level, this.inventories, this.energyBlocks, this.fluidBlocks, this.innerMin, this.innerMax);
+                ClaimSnapshot.Diff diff = ClaimSnapshot.diff(this.baselineSnapshot, now, HyperscaleConfig.ENERGY_DRIFT_TOLERANCE.get());
+                if (diff == null) {
+                    this.driftTicks = 0;
+                    this.settleTicks += SNAPSHOT_INTERVAL;
+                    if (this.settleTicks >= RecordLimits.SETTLE_TICKS) {
+                        this.closeRun();
+                        return;
+                    }
+                } else {
+                    this.settleTicks = 0;
+                    this.driftTicks += SNAPSHOT_INTERVAL;
+                    if (this.driftTicks >= RecordLimits.DRIFT_TIMEOUT_TICKS) {
+                        this.fail(diff.status(), diff.detail());
+                        return;
+                    }
                 }
             } else {
                 this.settleTicks = 0;
+                this.driftTicks = 0;
             }
-        } else {
-            this.settleTicks = 0;
-        }
-        if (this.runTicks % 10 == 0) {
-            this.sync();
         }
     }
 
@@ -375,28 +710,46 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
             this.fail(RecordStatus.LOST_BIND);
             return;
         }
-        ResourceLocation drift = ItemTotals.firstDiff(this.baseline, ItemTotals.snapshot(this.level, this.inventories));
-        if (drift != null) {
-            this.fail(RecordStatus.DRIFT, drift.toString());
+        ClaimSnapshot now = ClaimSnapshot.capture(this.level, this.inventories, this.energyBlocks, this.fluidBlocks, this.innerMin, this.innerMax);
+        ClaimSnapshot.Diff diff = ClaimSnapshot.diff(this.baselineSnapshot, now, HyperscaleConfig.ENERGY_DRIFT_TOLERANCE.get());
+        if (diff != null) {
+            this.fail(diff.status(), diff.detail());
             return;
         }
-        if (this.cycleInputs.isEmpty() || this.cycleOutputs.isEmpty()) {
+        boolean anyInput = !this.cycleInputs.isEmpty() || !this.cycleFluidInputs.isEmpty();
+        boolean anyOutput = !this.cycleOutputs.isEmpty() || !this.cycleFluidOutputs.isEmpty();
+        if (!anyInput || !anyOutput) {
             this.fail(RecordStatus.EMPTY);
             return;
         }
-        if (ItemTotals.same(this.cycleInputs, this.cycleOutputs)) {
+        if (ItemTotals.same(this.cycleInputs, this.cycleOutputs)
+                && ItemTotals.same(this.cycleFluidInputs, this.cycleFluidOutputs)) {
             this.fail(RecordStatus.PASSTHROUGH);
             return;
         }
-        if (this.patternInputs.isEmpty()) {
+        if (this.patternInputs.isEmpty() && this.patternFluidInputs.isEmpty()) {
             this.patternInputs.putAll(this.cycleInputs);
             this.patternOutputs.putAll(this.cycleOutputs);
-        } else if (!ItemTotals.same(this.patternInputs, this.cycleInputs)
-                || !ItemTotals.same(this.patternOutputs, this.cycleOutputs)) {
-            this.fail(RecordStatus.MISMATCH);
-            return;
+            this.patternFluidInputs.putAll(this.cycleFluidInputs);
+            this.patternFluidOutputs.putAll(this.cycleFluidOutputs);
+            this.patternEnergy = this.cycleEnergy;
+        } else {
+            if (!ItemTotals.same(this.patternInputs, this.cycleInputs)
+                    || !ItemTotals.same(this.patternOutputs, this.cycleOutputs)
+                    || !ItemTotals.same(this.patternFluidInputs, this.cycleFluidInputs)
+                    || !ItemTotals.same(this.patternFluidOutputs, this.cycleFluidOutputs)) {
+                this.fail(RecordStatus.MISMATCH);
+                return;
+            }
+            long allowedDelta = Math.max(200L, this.patternEnergy / 10L);
+            if (Math.abs(this.cycleEnergy - this.patternEnergy) > allowedDelta) {
+                this.fail(RecordStatus.ENERGY_MISMATCH);
+                return;
+            }
         }
-        this.tickSum += Math.max(20, this.runTicks);
+        int actualTicks = Math.max(1, this.runTicks - this.settleTicks);
+        this.tickSum += actualTicks;
+        this.energySum += this.cycleEnergy;
         this.matched++;
         this.clearCycle();
         if (this.matched >= RecordLimits.CYCLES) {
@@ -412,12 +765,23 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
     }
 
     private void finish() {
-        int ticks = Math.max(20, this.tickSum / RecordLimits.CYCLES);
+        ItemStack card = this.items.getStackInSlot(0);
+        if (!card.is(ModItems.EMPTY_IMAGE_CARD.get())) {
+            this.fail(RecordStatus.NEED_CARD);
+            return;
+        }
+        int ticks = Math.max(1, this.tickSum / RecordLimits.CYCLES);
+        int avgEnergy = (int) Math.min(Integer.MAX_VALUE, this.energySum / RecordLimits.CYCLES);
         ItemStack image = new ItemStack(ModItems.IMAGE.get());
+        int machineCount = Math.max(1, Math.max(this.inventoryCount, Math.max(this.energyBlocks.size(), this.fluidBlocks.size())));
         image.set(ModDataComponents.PROCESS_IMAGE.get(), new ProcessImage(
                 ItemTotals.freeze(this.patternInputs),
                 ItemTotals.freeze(this.patternOutputs),
-                ticks
+                ticks,
+                avgEnergy,
+                machineCount,
+                ItemTotals.freezeFluids(this.patternFluidInputs),
+                ItemTotals.freezeFluids(this.patternFluidOutputs)
         ));
         this.items.setStackInSlot(0, image);
         this.awaitingContinue = false;
@@ -425,13 +789,13 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         this.setStatus(RecordStatus.DONE, "");
         if (this.level != null) {
             this.level.playSound(null, this.worldPosition, SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT, SoundSource.BLOCKS, 1.0F, 1.1F);
-            this.drawFrame();
+            this.drawCorners();
         }
     }
 
     private boolean inputsHaveItems() {
         for (BlockPos pos : this.inputs) {
-            if (!(this.level.getBlockEntity(pos) instanceof ProbeBlockEntity probe)) {
+            if (!this.level.isLoaded(pos) || !(this.level.getBlockEntity(pos) instanceof ProbeBlockEntity probe)) {
                 continue;
             }
             for (int slot = 0; slot < probe.items().getSlots(); slot++) {
@@ -440,18 +804,32 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
                 }
             }
         }
+        for (BlockPos pos : this.fluidInputs) {
+            if (this.level.isLoaded(pos)
+                    && this.level.getBlockEntity(pos) instanceof FluidProbeBlockEntity probe
+                    && !probe.tank().isEmpty()) {
+                return true;
+            }
+        }
         return false;
     }
 
     private boolean inputsEmpty() {
         for (BlockPos pos : this.inputs) {
-            if (!(this.level.getBlockEntity(pos) instanceof ProbeBlockEntity probe)) {
+            if (!this.level.isLoaded(pos) || !(this.level.getBlockEntity(pos) instanceof ProbeBlockEntity probe)) {
                 continue;
             }
             for (int slot = 0; slot < probe.items().getSlots(); slot++) {
                 if (!probe.items().getStackInSlot(slot).isEmpty()) {
                     return false;
                 }
+            }
+        }
+        for (BlockPos pos : this.fluidInputs) {
+            if (this.level.isLoaded(pos)
+                    && this.level.getBlockEntity(pos) instanceof FluidProbeBlockEntity probe
+                    && !probe.tank().isEmpty()) {
+                return false;
             }
         }
         return true;
@@ -461,21 +839,43 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         if (this.level == null) {
             return false;
         }
-        return this.refreshList(this.inputs, ProbeMode.INPUT) && this.refreshList(this.outputs, ProbeMode.OUTPUT);
+        boolean inputsOk = this.refreshList(this.inputs, ProbeMode.INPUT);
+        boolean outputsOk = this.refreshList(this.outputs, ProbeMode.OUTPUT);
+        boolean fluidInputsOk = this.refreshFluidList(this.fluidInputs, ProbeMode.INPUT);
+        boolean fluidOutputsOk = this.refreshFluidList(this.fluidOutputs, ProbeMode.OUTPUT);
+        return inputsOk && outputsOk && fluidInputsOk && fluidOutputsOk;
     }
 
-    private boolean refreshList(List<BlockPos> list, ProbeMode mode) {
+    private boolean refreshFluidList(List<BlockPos> list, ProbeMode mode) {
+        boolean allValid = true;
         Iterator<BlockPos> iterator = list.iterator();
         while (iterator.hasNext()) {
             BlockPos pos = iterator.next();
-            if (!(this.level.getBlockEntity(pos) instanceof ProbeBlockEntity probe)
+            if (!this.level.isLoaded(pos)
+                    || !(this.level.getBlockEntity(pos) instanceof FluidProbeBlockEntity probe)
                     || probe.mode() != mode
                     || !this.worldPosition.equals(probe.compiler())) {
                 iterator.remove();
-                return false;
+                allValid = false;
             }
         }
-        return true;
+        return allValid;
+    }
+
+    private boolean refreshList(List<BlockPos> list, ProbeMode mode) {
+        boolean allValid = true;
+        Iterator<BlockPos> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            BlockPos pos = iterator.next();
+            if (!this.level.isLoaded(pos)
+                    || !(this.level.getBlockEntity(pos) instanceof ProbeBlockEntity probe)
+                    || probe.mode() != mode
+                    || !this.worldPosition.equals(probe.compiler())) {
+                iterator.remove();
+                allValid = false;
+            }
+        }
+        return allValid;
     }
 
     private void fail(RecordStatus status) {
@@ -495,8 +895,12 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
     private void clearCycle() {
         this.cycleInputs.clear();
         this.cycleOutputs.clear();
+        this.cycleFluidInputs.clear();
+        this.cycleFluidOutputs.clear();
+        this.cycleEnergy = 0L;
         this.runTicks = 0;
         this.settleTicks = 0;
+        this.driftTicks = 0;
     }
 
     private void setStatus(RecordStatus status, String detail) {
@@ -506,53 +910,51 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         this.sync();
     }
 
-    private void sealDroppedItems() {
-        if (!this.hasBox || this.level == null) {
-            return;
-        }
-        AABB area = new AABB(
-                this.boxMin.getX(), this.boxMin.getY(), this.boxMin.getZ(),
-                this.boxMax.getX() + 1.0D, this.boxMax.getY() + 1.0D, this.boxMax.getZ() + 1.0D
-        );
-        for (ItemEntity item : this.level.getEntitiesOfClass(ItemEntity.class, area)) {
-            item.setPickUpDelay(40);
-        }
-    }
-
-    private void drawFrame() {
+    private void drawCorners() {
         if (!(this.level instanceof ServerLevel server) || !this.hasBox) {
             return;
         }
-        double x0 = this.boxMin.getX();
-        double y0 = this.boxMin.getY();
-        double z0 = this.boxMin.getZ();
-        double x1 = this.boxMax.getX() + 1.0D;
-        double y1 = this.boxMax.getY() + 1.0D;
-        double z1 = this.boxMax.getZ() + 1.0D;
-        this.edge(server, x0, y0, z0, x1, y0, z0);
-        this.edge(server, x0, y1, z0, x1, y1, z0);
-        this.edge(server, x0, y0, z1, x1, y0, z1);
-        this.edge(server, x0, y1, z1, x1, y1, z1);
-        this.edge(server, x0, y0, z0, x0, y1, z0);
-        this.edge(server, x1, y0, z0, x1, y1, z0);
-        this.edge(server, x0, y0, z1, x0, y1, z1);
-        this.edge(server, x1, y0, z1, x1, y1, z1);
-        this.edge(server, x0, y0, z0, x0, y0, z1);
-        this.edge(server, x1, y0, z0, x1, y0, z1);
-        this.edge(server, x0, y1, z0, x0, y1, z1);
-        this.edge(server, x1, y1, z0, x1, y1, z1);
-    }
-
-    private void edge(ServerLevel server, double x0, double y0, double z0, double x1, double y1, double z1) {
-        double length = Math.max(Math.abs(x1 - x0), Math.max(Math.abs(y1 - y0), Math.abs(z1 - z0)));
-        int steps = Math.max(1, (int) Math.ceil(length));
-        for (int step = 0; step <= steps; step++) {
-            double t = step / (double) steps;
-            server.sendParticles(ParticleTypes.END_ROD, x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, z0 + (z1 - z0) * t, 1, 0.0D, 0.0D, 0.0D, 0.0D);
+        double x0 = this.outerMin.getX();
+        double y0 = this.outerMin.getY();
+        double z0 = this.outerMin.getZ();
+        double x1 = this.outerMax.getX() + 1.0D;
+        double y1 = this.outerMax.getY() + 1.0D;
+        double z1 = this.outerMax.getZ() + 1.0D;
+        double[] xs = {x0, x1};
+        double[] ys = {y0, y1};
+        double[] zs = {z0, z1};
+        for (double x : xs) {
+            for (double y : ys) {
+                for (double z : zs) {
+                    server.sendParticles(ParticleTypes.END_ROD, x, y, z, 2, 0.05D, 0.05D, 0.05D, 0.0D);
+                }
+            }
         }
     }
 
     public void release() {
+        SAMPLING.remove(this);
+        this.unbindAllProbes();
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("Phase", this.phase.name());
+        tag.putString("Status", this.status.name());
+        tag.putString("Detail", this.detail);
+        tag.putInt("Matched", this.matched);
+        tag.putBoolean("AwaitingContinue", this.awaitingContinue);
+        tag.putInt("Width", this.width);
+        tag.putInt("Height", this.height);
+        tag.putInt("Depth", this.depth);
+        tag.putInt("InventoryCount", this.inventoryCount);
+        tag.putBoolean("HasBox", this.hasBox);
+        tag.putLong("InnerMin", this.innerMin.asLong());
+        tag.putLong("InnerMax", this.innerMax.asLong());
+        this.writePositions(tag, "Inputs", this.inputs);
+        this.writePositions(tag, "Outputs", this.outputs);
+        return tag;
     }
 
     @Override
@@ -563,20 +965,30 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         tag.putString("Detail", this.detail);
         tag.putInt("Matched", this.matched);
         tag.putInt("TickSum", this.tickSum);
+        tag.putLong("EnergySum", this.energySum);
+        tag.putLong("PatternEnergy", this.patternEnergy);
         tag.putBoolean("AwaitingContinue", this.awaitingContinue);
         tag.putInt("Width", this.width);
         tag.putInt("Height", this.height);
         tag.putInt("Depth", this.depth);
         tag.putInt("InventoryCount", this.inventoryCount);
         tag.putBoolean("HasBox", this.hasBox);
-        tag.putLong("BoxMin", this.boxMin.asLong());
-        tag.putLong("BoxMax", this.boxMax.asLong());
+        tag.putLong("BoxMin", this.outerMin.asLong());
+        tag.putLong("BoxMax", this.outerMax.asLong());
+        tag.putLong("InnerMin", this.innerMin.asLong());
+        tag.putLong("InnerMax", this.innerMax.asLong());
         this.writePositions(tag, "Inputs", this.inputs);
         this.writePositions(tag, "Outputs", this.outputs);
+        this.writePositions(tag, "FluidInputs", this.fluidInputs);
+        this.writePositions(tag, "FluidOutputs", this.fluidOutputs);
+        this.writePositions(tag, "PowerPorts", this.powerPorts);
         this.writePositions(tag, "Inventories", this.inventories);
-        tag.put("Baseline", this.saveTotals(this.baseline));
+        this.writePositions(tag, "EnergyBlocks", this.energyBlocks);
+        this.writePositions(tag, "FluidBlocks", this.fluidBlocks);
         tag.put("PatternInputs", this.saveTotals(this.patternInputs));
         tag.put("PatternOutputs", this.saveTotals(this.patternOutputs));
+        tag.put("PatternFluidInputs", this.saveTotals(this.patternFluidInputs));
+        tag.put("PatternFluidOutputs", this.saveTotals(this.patternFluidOutputs));
     }
 
     @Override
@@ -585,22 +997,52 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
         this.phase = this.readEnum(RecordPhase.class, tag.getString("Phase"), RecordPhase.IDLE);
         this.status = this.readEnum(RecordStatus.class, tag.getString("Status"), RecordStatus.IDLE);
         this.detail = tag.getString("Detail");
-        this.matched = tag.getInt("Matched");
-        this.tickSum = tag.getInt("TickSum");
+        this.matched = Math.max(0, tag.getInt("Matched"));
+        this.tickSum = Math.max(0, tag.getInt("TickSum"));
+        this.energySum = Math.max(0L, tag.getLong("EnergySum"));
+        this.patternEnergy = tag.contains("PatternEnergy") ? tag.getLong("PatternEnergy") : -1L;
         this.awaitingContinue = tag.getBoolean("AwaitingContinue");
         this.width = tag.getInt("Width");
         this.height = tag.getInt("Height");
         this.depth = tag.getInt("Depth");
         this.inventoryCount = tag.getInt("InventoryCount");
         this.hasBox = tag.getBoolean("HasBox");
-        this.boxMin = BlockPos.of(tag.getLong("BoxMin"));
-        this.boxMax = BlockPos.of(tag.getLong("BoxMax"));
+        this.outerMin = BlockPos.of(tag.getLong("BoxMin"));
+        this.outerMax = BlockPos.of(tag.getLong("BoxMax"));
+        this.innerMin = tag.contains("InnerMin") ? BlockPos.of(tag.getLong("InnerMin")) : this.outerMin.offset(1, 1, 1);
+        this.innerMax = tag.contains("InnerMax") ? BlockPos.of(tag.getLong("InnerMax")) : this.outerMax.offset(-1, -1, -1);
         this.readPositions(tag.getLongArray("Inputs"), this.inputs);
         this.readPositions(tag.getLongArray("Outputs"), this.outputs);
-        this.readPositions(tag.getLongArray("Inventories"), this.inventories);
-        this.readTotals(tag.getList("Baseline", net.minecraft.nbt.Tag.TAG_COMPOUND), this.baseline);
-        this.readTotals(tag.getList("PatternInputs", net.minecraft.nbt.Tag.TAG_COMPOUND), this.patternInputs);
-        this.readTotals(tag.getList("PatternOutputs", net.minecraft.nbt.Tag.TAG_COMPOUND), this.patternOutputs);
+        if (tag.contains("FluidInputs")) {
+            this.readPositions(tag.getLongArray("FluidInputs"), this.fluidInputs);
+        }
+        if (tag.contains("FluidOutputs")) {
+            this.readPositions(tag.getLongArray("FluidOutputs"), this.fluidOutputs);
+        }
+        if (tag.contains("PowerPorts")) {
+            this.readPositions(tag.getLongArray("PowerPorts"), this.powerPorts);
+        }
+        if (tag.contains("Inventories")) {
+            this.readPositions(tag.getLongArray("Inventories"), this.inventories);
+        }
+        if (tag.contains("EnergyBlocks")) {
+            this.readPositions(tag.getLongArray("EnergyBlocks"), this.energyBlocks);
+        }
+        if (tag.contains("FluidBlocks")) {
+            this.readPositions(tag.getLongArray("FluidBlocks"), this.fluidBlocks);
+        }
+        if (tag.contains("PatternInputs")) {
+            this.readTotals(tag.getList("PatternInputs", Tag.TAG_COMPOUND), this.patternInputs);
+        }
+        if (tag.contains("PatternOutputs")) {
+            this.readTotals(tag.getList("PatternOutputs", Tag.TAG_COMPOUND), this.patternOutputs);
+        }
+        if (tag.contains("PatternFluidInputs")) {
+            this.readTotals(tag.getList("PatternFluidInputs", Tag.TAG_COMPOUND), this.patternFluidInputs);
+        }
+        if (tag.contains("PatternFluidOutputs")) {
+            this.readTotals(tag.getList("PatternFluidOutputs", Tag.TAG_COMPOUND), this.patternFluidOutputs);
+        }
         this.resumed = false;
     }
 
@@ -641,7 +1083,7 @@ public class RecorderBlockEntity extends InventoryBlockEntity {
 
     private void readTotals(ListTag list, Map<ResourceLocation, Integer> into) {
         into.clear();
-        for (net.minecraft.nbt.Tag tag : list) {
+        for (Tag tag : list) {
             if (!(tag instanceof CompoundTag compound)) {
                 continue;
             }

@@ -1,10 +1,5 @@
 package dev.daan.hyperscale.block;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-import dev.daan.hyperscale.item.BinderItem;
-import dev.daan.hyperscale.item.HallInsertables;
 import dev.daan.hyperscale.menu.InterfaceMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -48,8 +43,7 @@ public class InterfaceBlock extends Block {
 
     /** Exported workbench: 2 wide (0–32), ~1.28 tall, depth 1–15. Front faces north. */
     private static final VoxelShape SHAPE_NORTH = Shapes.box(0.0D, 0.0D, 1.0D / 16.0D, 2.0D, 20.5D / 16.0D, 15.0D / 16.0D);
-    private static final Map<Direction, VoxelShape> FULL_SHAPES = new ConcurrentHashMap<>();
-    private static final Map<String, VoxelShape> CLIPPED_SHAPES = new ConcurrentHashMap<>();
+    private static final VoxelShape[] CLIPPED_SHAPES = buildClippedShapes();
     private static final ThreadLocal<Boolean> CLEARING = ThreadLocal.withInitial(() -> Boolean.FALSE);
 
     public InterfaceBlock(Properties properties) {
@@ -58,6 +52,26 @@ public class InterfaceBlock extends Block {
                 .setValue(FACING, Direction.NORTH)
                 .setValue(HALF, DoubleBlockHalf.LOWER)
                 .setValue(PART, InterfacePart.PRIMARY));
+    }
+
+    private static VoxelShape[] buildClippedShapes() {
+        VoxelShape[] shapes = new VoxelShape[16];
+        for (Direction facing : Direction.Plane.HORIZONTAL) {
+            VoxelShape full = rotate(SHAPE_NORTH, facing);
+            for (InterfacePart part : InterfacePart.values()) {
+                int dx = part == InterfacePart.PRIMARY ? 0 : facing.getClockWise().getStepX();
+                int dz = part == InterfacePart.PRIMARY ? 0 : facing.getClockWise().getStepZ();
+                for (DoubleBlockHalf half : DoubleBlockHalf.values()) {
+                    int dy = half == DoubleBlockHalf.UPPER ? 1 : 0;
+                    shapes[shapeIndex(facing, part, half)] = clip(full, dx, dy, dz);
+                }
+            }
+        }
+        return shapes;
+    }
+
+    private static int shapeIndex(Direction facing, InterfacePart part, DoubleBlockHalf half) {
+        return (facing.get2DDataValue() << 2) | (part.ordinal() << 1) | half.ordinal();
     }
 
     public static boolean isPrimary(BlockState state) {
@@ -72,31 +86,8 @@ public class InterfaceBlock extends Block {
                 : base;
     }
 
-    private static VoxelShape fullShape(Direction facing) {
-        return FULL_SHAPES.computeIfAbsent(facing, direction -> rotate(SHAPE_NORTH, direction));
-    }
-
     private static VoxelShape shapeFor(BlockState state) {
-        Direction facing = state.getValue(FACING);
-        int dx = partDx(facing, state.getValue(PART));
-        int dy = state.getValue(HALF) == DoubleBlockHalf.UPPER ? 1 : 0;
-        int dz = partDz(facing, state.getValue(PART));
-        String key = facing.getSerializedName() + "|" + dx + "|" + dy + "|" + dz;
-        return CLIPPED_SHAPES.computeIfAbsent(key, ignored -> clip(fullShape(facing), dx, dy, dz));
-    }
-
-    private static int partDx(Direction facing, InterfacePart part) {
-        if (part == InterfacePart.PRIMARY) {
-            return 0;
-        }
-        return facing.getClockWise().getStepX();
-    }
-
-    private static int partDz(Direction facing, InterfacePart part) {
-        if (part == InterfacePart.PRIMARY) {
-            return 0;
-        }
-        return facing.getClockWise().getStepZ();
+        return CLIPPED_SHAPES[shapeIndex(state.getValue(FACING), state.getValue(PART), state.getValue(HALF))];
     }
 
     private static VoxelShape clip(VoxelShape fullAtPrimary, int partDx, int partDy, int partDz) {
@@ -124,8 +115,7 @@ public class InterfaceBlock extends Block {
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         Direction facing = context.getHorizontalDirection().getOpposite();
         BlockPos origin = context.getClickedPos();
-        Level level = context.getLevel();
-        if (!this.fits(level, origin, facing)) {
+        if (!this.fits(context, origin, facing)) {
             return null;
         }
         return this.defaultBlockState()
@@ -134,12 +124,16 @@ public class InterfaceBlock extends Block {
                 .setValue(PART, InterfacePart.PRIMARY);
     }
 
-    private boolean fits(Level level, BlockPos origin, Direction facing) {
+    private boolean fits(BlockPlaceContext context, BlockPos origin, Direction facing) {
+        Level level = context.getLevel();
         for (InterfacePart part : InterfacePart.values()) {
             for (DoubleBlockHalf half : DoubleBlockHalf.values()) {
                 BlockPos pos = partPos(origin, facing, part, half);
+                if (!level.isInWorldBounds(pos) || !level.getWorldBorder().isWithinBounds(pos)) {
+                    return false;
+                }
                 BlockState state = level.getBlockState(pos);
-                if (!(pos.equals(origin) ? state.canBeReplaced() : state.canBeReplaced() || state.isAir())) {
+                if (!(pos.equals(origin) ? state.canBeReplaced(context) : state.canBeReplaced(context) || state.isAir())) {
                     return false;
                 }
             }
@@ -149,7 +143,7 @@ public class InterfaceBlock extends Block {
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        if (level.isClientSide || !isPrimary(state)) {
+        if (!isPrimary(state)) {
             return;
         }
         Direction facing = state.getValue(FACING);
@@ -189,14 +183,14 @@ public class InterfaceBlock extends Block {
 
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock())) {
+        if (!level.isClientSide && !state.is(newState.getBlock())) {
             this.clearSiblings(level, pos, state);
         }
         super.onRemove(state, level, pos, newState, movedByPiston);
     }
 
     private void clearSiblings(Level level, BlockPos pos, BlockState state) {
-        if (CLEARING.get()) {
+        if (level.isClientSide || CLEARING.get()) {
             return;
         }
         CLEARING.set(Boolean.TRUE);
@@ -210,7 +204,10 @@ public class InterfaceBlock extends Block {
                         continue;
                     }
                     BlockState partState = level.getBlockState(partPos);
-                    if (partState.is(this)) {
+                    if (partState.is(this)
+                            && partState.getValue(FACING) == facing
+                            && partState.getValue(PART) == part
+                            && partState.getValue(HALF) == half) {
                         level.setBlock(partPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL | Block.UPDATE_SUPPRESS_DROPS);
                     }
                 }
@@ -247,7 +244,14 @@ public class InterfaceBlock extends Block {
 
     @Override
     protected BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
+        if (mirror == Mirror.NONE) {
+            return state;
+        }
+        BlockState rotated = state.rotate(mirror.getRotation(state.getValue(FACING)));
+        InterfacePart flipped = rotated.getValue(PART) == InterfacePart.PRIMARY
+                ? InterfacePart.SECONDARY
+                : InterfacePart.PRIMARY;
+        return rotated.setValue(PART, flipped);
     }
 
     @Override
@@ -258,19 +262,13 @@ public class InterfaceBlock extends Block {
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         this.open(level, primaryPos(pos, state), player);
-        return InteractionResult.SUCCESS;
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        BlockPos primary = primaryPos(pos, state);
-        if (HallInsertables.isBinder(stack)) {
-            return BinderItem.apply(level, primary, player, stack)
-                    ? ItemInteractionResult.sidedSuccess(level.isClientSide)
-                    : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-        this.open(level, primary, player);
-        return ItemInteractionResult.SUCCESS;
+        this.open(level, primaryPos(pos, state), player);
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
     }
 
     private void open(Level level, BlockPos pos, Player player) {

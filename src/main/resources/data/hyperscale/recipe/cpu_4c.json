@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["CRC", "PLP", "CRC"],
+  "key": {
+    "C": { "tag": "c:ingots/copper" },
+    "R": { "tag": "c:dusts/redstone" },
+    "P": { "item": "hyperscale:pcb" },
+    "L": { "item": "hyperscale:logic_die" }
+  },
+  "result": { "id": "hyperscale:cpu_4c", "count": 1 }
+}

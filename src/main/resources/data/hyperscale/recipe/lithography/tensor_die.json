@@ -1,0 +1,11 @@
+{
+  "type": "hyperscale:lithography",
+  "mask": { "item": "hyperscale:mask_tensor" },
+  "wafer": { "item": "hyperscale:doped_wafer" },
+  "catalyst": { "tag": "c:gems/diamond" },
+  "catalyst_count": 2,
+  "water_mb": 250,
+  "result": { "id": "hyperscale:tensor_die", "count": 1 },
+  "ticks": 140,
+  "energy": 20000
+}

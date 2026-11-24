@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["IPI", "OLO", "ICI"],
+  "key": {
+    "I": { "item": "minecraft:iron_block" },
+    "P": { "item": "hyperscale:pcb" },
+    "O": { "item": "minecraft:observer" },
+    "L": { "item": "hyperscale:logic_die" },
+    "C": { "item": "minecraft:comparator" }
+  },
+  "result": { "id": "hyperscale:recorder", "count": 1 }
+}

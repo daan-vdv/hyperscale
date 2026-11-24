@@ -1,0 +1,17 @@
+{
+  "parent": "hyperscale:tier3_watercooling",
+  "display": {
+    "icon": { "id": "hyperscale:cpu_128c" },
+    "title": { "translate": "advancement.hyperscale.tier4_quantum.title" },
+    "description": { "translate": "advancement.hyperscale.tier4_quantum.desc" },
+    "frame": "challenge"
+  },
+  "criteria": {
+    "has_apex": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{ "items": ["hyperscale:cpu_128c", "hyperscale:gpu_t3", "hyperscale:ram_512gb_ddr5", "hyperscale:nvme_256gb"] }]
+      }
+    }
+  }
+}

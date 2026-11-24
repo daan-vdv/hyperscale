@@ -1,0 +1,16 @@
+{
+  "parent": "hyperscale:tier2_cooling",
+  "display": {
+    "icon": { "id": "hyperscale:gpu_t1" },
+    "title": { "translate": "advancement.hyperscale.tier3_gpu.title" },
+    "description": { "translate": "advancement.hyperscale.tier3_gpu.desc" }
+  },
+  "criteria": {
+    "has_gpu": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{ "items": ["hyperscale:gpu_t1", "hyperscale:gpu_t2", "hyperscale:gpu_t3"] }]
+      }
+    }
+  }
+}

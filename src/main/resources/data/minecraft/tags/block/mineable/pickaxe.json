@@ -7,7 +7,17 @@
     "hyperscale:server_rack",
     "hyperscale:drive_bay",
     "hyperscale:recorder",
+    "hyperscale:recorder_casing",
     "hyperscale:recorder_input",
-    "hyperscale:recorder_output"
+    "hyperscale:recorder_output",
+    "hyperscale:recorder_fluid_input",
+    "hyperscale:recorder_fluid_output",
+    "hyperscale:recorder_power",
+    "hyperscale:backup_generator",
+    "hyperscale:cable",
+    "hyperscale:server_fan",
+    "hyperscale:watercooler_controller",
+    "hyperscale:wafer_press",
+    "hyperscale:lithography_etcher"
   ]
 }

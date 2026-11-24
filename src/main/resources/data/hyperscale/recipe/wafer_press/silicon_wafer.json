@@ -1,0 +1,8 @@
+{
+  "type": "hyperscale:wafer_press",
+  "base": { "tag": "c:silicon" },
+  "base_count": 2,
+  "result": { "id": "hyperscale:silicon_wafer", "count": 1 },
+  "ticks": 60,
+  "energy": 2400
+}

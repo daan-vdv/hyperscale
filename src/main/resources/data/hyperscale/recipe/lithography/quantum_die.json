@@ -1,0 +1,11 @@
+{
+  "type": "hyperscale:lithography",
+  "mask": { "item": "hyperscale:mask_logic" },
+  "wafer": { "item": "hyperscale:quantum_wafer" },
+  "catalyst": { "item": "minecraft:amethyst_shard" },
+  "catalyst_count": 2,
+  "water_mb": 500,
+  "result": { "id": "hyperscale:quantum_die", "count": 1 },
+  "ticks": 200,
+  "energy": 60000
+}

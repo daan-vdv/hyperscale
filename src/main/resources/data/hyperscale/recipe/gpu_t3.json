@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["NQN", "CGM", "NTN"],
+  "key": {
+    "N": { "tag": "c:ingots/netherite" },
+    "Q": { "item": "hyperscale:quantum_die" },
+    "C": { "item": "hyperscale:cpu_64c" },
+    "G": { "item": "hyperscale:gpu_t2" },
+    "M": { "item": "hyperscale:ram_256gb_ddr5" },
+    "T": { "item": "hyperscale:tensor_die" }
+  },
+  "result": { "id": "hyperscale:gpu_t3", "count": 1 }
+}

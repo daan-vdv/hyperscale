@@ -1,0 +1,14 @@
+{
+  "parent": "hyperscale:tier0_silicon_fab",
+  "display": {
+    "icon": { "id": "hyperscale:recorder" },
+    "title": { "translate": "advancement.hyperscale.tier0_compiler.title" },
+    "description": { "translate": "advancement.hyperscale.tier0_compiler.desc" }
+  },
+  "criteria": {
+    "has_recorder": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:recorder" }] }
+    }
+  }
+}

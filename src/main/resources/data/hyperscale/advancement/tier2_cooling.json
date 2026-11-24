@@ -1,0 +1,15 @@
+{
+  "parent": "hyperscale:tier2_cabling",
+  "display": {
+    "icon": { "id": "hyperscale:server_fan" },
+    "title": { "translate": "advancement.hyperscale.tier2_cooling.title" },
+    "description": { "translate": "advancement.hyperscale.tier2_cooling.desc" },
+    "frame": "goal"
+  },
+  "criteria": {
+    "has_fan": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": { "items": [{ "items": "hyperscale:server_fan" }] }
+    }
+  }
+}

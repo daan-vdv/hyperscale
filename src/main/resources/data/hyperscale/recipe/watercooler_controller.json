@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["CBI", "PLP", "IBC"],
+  "key": {
+    "C": { "item": "minecraft:copper_block" },
+    "B": { "item": "minecraft:bucket" },
+    "I": { "item": "minecraft:iron_block" },
+    "P": { "item": "hyperscale:pcb" },
+    "L": { "item": "hyperscale:logic_die" }
+  },
+  "result": { "id": "hyperscale:watercooler_controller", "count": 1 }
+}

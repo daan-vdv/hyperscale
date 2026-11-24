@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "all": "hyperscale:block/recorder_casing"
+  }
+}

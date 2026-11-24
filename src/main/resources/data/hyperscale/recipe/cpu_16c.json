@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["DLD", "CWC", "DPD"],
+  "key": {
+    "D": { "tag": "c:gems/diamond" },
+    "L": { "item": "hyperscale:logic_die" },
+    "C": { "item": "hyperscale:cpu" },
+    "W": { "item": "hyperscale:doped_wafer" },
+    "P": { "item": "hyperscale:pcb" }
+  },
+  "result": { "id": "hyperscale:cpu_16c", "count": 1 }
+}

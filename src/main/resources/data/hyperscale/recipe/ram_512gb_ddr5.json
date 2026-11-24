@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["NQN", "ADA", "NRN"],
+  "key": {
+    "N": { "tag": "c:ingots/netherite" },
+    "Q": { "item": "hyperscale:quantum_die" },
+    "A": { "item": "hyperscale:ram_256gb_ddr5" },
+    "D": { "item": "minecraft:diamond_block" },
+    "R": { "item": "minecraft:redstone_block" }
+  },
+  "result": { "id": "hyperscale:ram_512gb_ddr5", "count": 1 }
+}
