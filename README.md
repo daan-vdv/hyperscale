@@ -2,7 +2,9 @@
 
 **Hyperscale** is a NeoForge `1.21.1` datacenter & factory-virtualization mod. Instead of building hundreds of laggy machines, you build a **Semiconductor Fab**, encase any working automation setup *once* inside a sealed **Compiler Casing** chamber to compile it into a portable **Image Card**, and scale replicas cleanly inside a real datacenter hall.
 
-> **Early Alpha Playtest Notice:** Textures and crafting recipes are still Work-in-Progress! Feedback on mechanics, capture edge cases/exploits, cooling balance, and modpack compatibility is very welcome via [GitHub Issues](https://github.com/daan-vdv/hyperscale/issues).
+> **Early Alpha Playtest Notice:** Textures and crafting recipes are still Work-in-Progress! Feedback on mechanics, capture edge cases/exploits, **recipe balance**, and modpack compatibility is very welcome via [GitHub Issues](https://github.com/daan-vdv/hyperscale/issues).
+>
+> **New to Hyperscale?** Read the full **[Playtester Guide (docs/GUIDE.md)](docs/GUIDE.md)** for step-by-step instructions on the Semiconductor Fab, capturing factories, cooling/radiator loops, and troubleshooting!
 
 ## Installing (Playtest)
 
