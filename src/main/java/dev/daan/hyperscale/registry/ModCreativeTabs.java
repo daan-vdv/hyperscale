@@ -1,9 +1,11 @@
 package dev.daan.hyperscale.registry;
 
 import dev.daan.hyperscale.Hyperscale;
+import dev.daan.hyperscale.compat.guideme.HyperscaleGuideCompat;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -16,6 +18,9 @@ public final class ModCreativeTabs {
                     .title(Component.translatable("itemGroup.hyperscale"))
                     .icon(() -> ModItems.INTERFACE.get().getDefaultInstance())
                     .displayItems((parameters, output) -> {
+                        if (ModList.get().isLoaded("guideme")) {
+                            output.accept(HyperscaleGuideCompat.createGuideItem());
+                        }
                         output.accept(ModItems.INTERFACE.get());
                         output.accept(ModItems.PORT.get());
                         output.accept(ModItems.FLUID_PORT.get());

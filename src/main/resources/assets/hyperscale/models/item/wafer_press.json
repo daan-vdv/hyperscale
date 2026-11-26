@@ -1,1 +1,3 @@
-{"parent":"hyperscale:block/recorder"}
+{
+  "parent": "hyperscale:block/wafer_press"
+}

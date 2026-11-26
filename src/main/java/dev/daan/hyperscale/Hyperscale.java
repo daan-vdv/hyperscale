@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
+import dev.daan.hyperscale.compat.guideme.HyperscaleGuideCompat;
 import dev.daan.hyperscale.network.ModNetwork;
 import dev.daan.hyperscale.registry.ModBlockEntities;
 import dev.daan.hyperscale.registry.ModBlocks;
@@ -14,9 +15,11 @@ import dev.daan.hyperscale.registry.ModMenus;
 import dev.daan.hyperscale.registry.ModRecipes;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 
 @Mod(Hyperscale.MOD_ID)
 public class Hyperscale {
@@ -37,6 +40,10 @@ public class Hyperscale {
         ModCreativeTabs.TABS.register(modEventBus);
         modEventBus.addListener(ModBlockEntities::registerCapabilities);
         modEventBus.addListener(ModNetwork::registerPayloads);
+
+        if (FMLEnvironment.dist.isClient() && ModList.get().isLoaded("guideme")) {
+            HyperscaleGuideCompat.registerGuide();
+        }
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {

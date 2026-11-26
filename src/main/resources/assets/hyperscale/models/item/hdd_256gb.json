@@ -1,1 +1,557 @@
-{"parent":"minecraft:item/generated","textures":{"layer0":"hyperscale:item/hdd"}}
+{
+  "credit": "Made with Blockbench",
+  "texture_size": [
+    64,
+    64
+  ],
+  "textures": {
+    "0": "hyperscale:item/hdd_led",
+    "1": "hyperscale:item/hdd_256gb",
+    "particle": "hyperscale:item/hdd_led"
+  },
+  "elements": [
+    {
+      "name": "HDD_Cast_Chassis",
+      "from": [
+        3.2,
+        6.9,
+        1.5
+      ],
+      "to": [
+        12.8,
+        9,
+        14.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            8,
+            4
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            8,
+            4
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            8,
+            4
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            8,
+            4
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "texture": "#1"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            8,
+            8
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "name": "HDD_Stainless_Top_Lid",
+      "from": [
+        3.35,
+        9,
+        1.65
+      ],
+      "to": [
+        12.65,
+        9.3,
+        14.35
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            0,
+            16,
+            1
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            16,
+            1
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            16,
+            1
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            16,
+            1
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#1"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "name": "HDD_Enterprise_Spec_Label",
+      "from": [
+        4.3,
+        9.28,
+        3.2
+      ],
+      "to": [
+        11.7,
+        9.36,
+        10.6
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            8,
+            8,
+            9
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            0,
+            8,
+            1,
+            16
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            0,
+            8,
+            8,
+            9
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            0,
+            8,
+            1,
+            16
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            0,
+            8,
+            8,
+            16
+          ],
+          "texture": "#1"
+        },
+        "down": {
+          "uv": [
+            0,
+            8,
+            8,
+            16
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "name": "HDD_Bottom_PCB_Controller",
+      "from": [
+        3.6,
+        6.72,
+        2.2
+      ],
+      "to": [
+        12.4,
+        6.92,
+        13.6
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            8,
+            16,
+            9
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            8,
+            8,
+            9,
+            16
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            8,
+            8,
+            16,
+            9
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            8,
+            8,
+            9,
+            16
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#1"
+        },
+        "down": {
+          "uv": [
+            8,
+            8,
+            16,
+            16
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "name": "SAS_SATA_Connector_Block",
+      "from": [
+        4.2,
+        6.85,
+        13.8
+      ],
+      "to": [
+        11.8,
+        7.65,
+        14.65
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            14,
+            16,
+            16
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            8,
+            14,
+            10,
+            16
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            8,
+            14,
+            16,
+            16
+          ],
+          "texture": "#1"
+        },
+        "west": {
+          "uv": [
+            8,
+            14,
+            10,
+            16
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            8,
+            14,
+            16,
+            16
+          ],
+          "texture": "#1"
+        },
+        "down": {
+          "uv": [
+            8,
+            14,
+            16,
+            16
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "name": "Front_Status_LED",
+      "from": [
+        11.4,
+        7.6,
+        1.42
+      ],
+      "to": [
+        12.3,
+        8.2,
+        1.55
+      ],
+      "shade": false,
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        65,
+        25,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        1
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        65,
+        25,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        1
+      ],
+      "scale": [
+        0.45,
+        0.45,
+        0.45
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        18,
+        -32,
+        12
+      ],
+      "translation": [
+        1.5,
+        3,
+        0
+      ],
+      "scale": [
+        0.55,
+        0.55,
+        0.55
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        18,
+        -32,
+        12
+      ],
+      "translation": [
+        1.5,
+        3,
+        0
+      ],
+      "scale": [
+        0.55,
+        0.55,
+        0.55
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        -0.5,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "gui": {
+      "rotation": [
+        32,
+        -142,
+        0
+      ],
+      "translation": [
+        0,
+        0.5,
+        0
+      ],
+      "scale": [
+        0.95,
+        0.95,
+        0.95
+      ]
+    },
+    "head": {
+      "translation": [
+        0,
+        7.5,
+        0
+      ],
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        -90,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        -0.5
+      ],
+      "scale": [
+        0.95,
+        0.95,
+        0.95
+      ]
+    }
+  }
+}

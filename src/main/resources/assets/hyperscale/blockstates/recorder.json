@@ -1,26 +1,10 @@
 {
   "variants": {
-    "facing=down": {
-      "model": "hyperscale:block/recorder_up",
-      "x": 180
-    },
-    "facing=up": {
-      "model": "hyperscale:block/recorder_up"
-    },
-    "facing=north": {
-      "model": "hyperscale:block/recorder"
-    },
-    "facing=east": {
-      "model": "hyperscale:block/recorder",
-      "y": 90
-    },
-    "facing=south": {
-      "model": "hyperscale:block/recorder",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "hyperscale:block/recorder",
-      "y": 270
-    }
+    "facing=down":  { "model": "hyperscale:block/recorder", "x": 90 },
+    "facing=up":    { "model": "hyperscale:block/recorder", "x": 270 },
+    "facing=north": { "model": "hyperscale:block/recorder" },
+    "facing=east":  { "model": "hyperscale:block/recorder", "y": 90 },
+    "facing=south": { "model": "hyperscale:block/recorder", "y": 180 },
+    "facing=west":  { "model": "hyperscale:block/recorder", "y": 270 }
   }
 }

@@ -125,6 +125,7 @@ dependencies {
     // Optional compile-only compat APIs (not required at runtime)
     compileOnly "maven.modrinth:jei:tlisIOnf"
     compileOnly "maven.modrinth:jade:eYz2YBGT"
+    compileOnly "maven.modrinth:guideme:QeYKsstN"
 
     // Dev/test runtime mods (not published as dependencies of Hyperscale)
     localRuntime "maven.modrinth:jei:tlisIOnf"                  // JEI 19.76.1.478

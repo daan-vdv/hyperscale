@@ -1,5 +1,7 @@
 {
   "itemGroup.hyperscale": "Hyperscale",
+  "item.hyperscale.guide": "Hyperscale Manual",
+  "tooltip.hyperscale.guide": "Interactive guide to Semiconductor Fabs, Factory Capturing & Datacenters",
   "config.jade.plugin_hyperscale.datacenter_info": "Hyperscale Datacenter Info",
   "block.hyperscale.interface": "Interface",
   "block.hyperscale.port": "Port",

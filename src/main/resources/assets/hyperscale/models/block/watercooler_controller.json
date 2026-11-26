@@ -1,715 +1,1028 @@
 {
-    "format_version":  "26.3",
-    "credit":  "Made with Blockbench",
-    "texture_size":  [
-                         32,
-                         32
-                     ],
-    "textures":  {
-                     "0":  "hyperscale:block/datacenter_watercooling_controller_mc",
-                     "particle":  "hyperscale:block/datacenter_watercooling_controller_mc"
-                 },
-    "elements":  [
-                     {
-                         "name":  "chassis_top",
-                         "from":  [
-                                      0,
-                                      14,
-                                      0
-                                  ],
-                         "to":  [
-                                    16,
-                                    16,
-                                    16
-                                ],
-                         "light_emission":  5,
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                0,
-                                                                0,
-                                                                8,
-                                                                1
-                                                            ],
-                                                     "texture":  "#0",
-                                                     "cullface":  "north"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               8,
-                                                               0,
-                                                               16,
-                                                               1
-                                                           ],
-                                                    "texture":  "#0",
-                                                    "cullface":  "east"
-                                                },
-                                       "south":  {
-                                                     "uv":  [
-                                                                8,
-                                                                0,
-                                                                16,
-                                                                1
-                                                            ],
-                                                     "texture":  "#0",
-                                                     "cullface":  "south"
-                                                 },
-                                       "west":  {
-                                                    "uv":  [
-                                                               8,
-                                                               0,
-                                                               16,
-                                                               1
-                                                           ],
-                                                    "texture":  "#0",
-                                                    "cullface":  "west"
-                                                },
-                                       "up":  {
-                                                  "uv":  [
-                                                             8,
-                                                             0,
-                                                             16,
-                                                             8
-                                                         ],
-                                                  "texture":  "#0",
-                                                  "cullface":  "up"
-                                              },
-                                       "down":  {
-                                                    "uv":  [
-                                                               8,
-                                                               0,
-                                                               16,
-                                                               8
-                                                           ],
-                                                    "texture":  "#0"
-                                                }
-                                   }
-                     },
-                     {
-                         "name":  "chassis_bottom",
-                         "from":  [
-                                      0,
-                                      0,
-                                      0
-                                  ],
-                         "to":  [
-                                    16,
-                                    6,
-                                    16
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                0,
-                                                                5,
-                                                                8,
-                                                                8
-                                                            ],
-                                                     "texture":  "#0",
-                                                     "cullface":  "north"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               8,
-                                                               5,
-                                                               16,
-                                                               8
-                                                           ],
-                                                    "texture":  "#0",
-                                                    "cullface":  "east"
-                                                },
-                                       "south":  {
-                                                     "uv":  [
-                                                                8,
-                                                                5,
-                                                                16,
-                                                                8
-                                                            ],
-                                                     "texture":  "#0",
-                                                     "cullface":  "south"
-                                                 },
-                                       "west":  {
-                                                    "uv":  [
-                                                               8,
-                                                               5,
-                                                               16,
-                                                               8
-                                                           ],
-                                                    "texture":  "#0",
-                                                    "cullface":  "west"
-                                                },
-                                       "up":  {
-                                                  "uv":  [
-                                                             8,
-                                                             0,
-                                                             16,
-                                                             8
-                                                         ],
-                                                  "texture":  "#0"
-                                              },
-                                       "down":  {
-                                                    "uv":  [
-                                                               8,
-                                                               0,
-                                                               16,
-                                                               8
-                                                           ],
-                                                    "texture":  "#0",
-                                                    "cullface":  "down"
-                                                }
-                                   }
-                     },
-                     {
-                         "name":  "chassis_left",
-                         "from":  [
-                                      0,
-                                      6,
-                                      0
-                                  ],
-                         "to":  [
-                                    2,
-                                    14,
-                                    16
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                7,
-                                                                5.5,
-                                                                8,
-                                                                7
-                                                            ],
-                                                     "texture":  "#0",
-                                                     "cullface":  "north"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               7.5,
-                                                               0,
-                                                               16,
-                                                               8
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "south":  {
-                                                     "uv":  [
-                                                                13,
-                                                                0,
-                                                                15,
-                                                                8
-                                                            ],
-                                                     "texture":  "#0",
-                                                     "cullface":  "south"
-                                                 },
-                                       "west":  {
-                                                    "uv":  [
-                                                               8,
-                                                               0,
-                                                               16,
-                                                               8
-                                                           ],
-                                                    "texture":  "#0",
-                                                    "cullface":  "west"
-                                                }
-                                   }
-                     },
-                     {
-                         "name":  "chassis_right_status_column",
-                         "from":  [
-                                      11,
-                                      6,
-                                      0
-                                  ],
-                         "to":  [
-                                    16,
-                                    14,
-                                    16
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                5.5,
-                                                                1,
-                                                                8,
-                                                                5
-                                                            ],
-                                                     "texture":  "#0",
-                                                     "cullface":  "north"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               8,
-                                                               2.5,
-                                                               16,
-                                                               6.5
-                                                           ],
-                                                    "texture":  "#0",
-                                                    "cullface":  "east"
-                                                },
-                                       "south":  {
-                                                     "uv":  [
-                                                                8.5,
-                                                                0.5,
-                                                                10.5,
-                                                                2.5
-                                                            ],
-                                                     "texture":  "#0",
-                                                     "cullface":  "south"
-                                                 },
-                                       "west":  {
-                                                    "uv":  [
-                                                               14,
-                                                               1,
-                                                               15,
-                                                               5
-                                                           ],
-                                                    "texture":  "#0"
-                                                }
-                                   }
-                     },
-                     {
-                         "name":  "thermal_lcd_screen",
-                         "from":  [
-                                      2,
-                                      6,
-                                      1
-                                  ],
-                         "to":  [
-                                    11,
-                                    14,
-                                    16
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                0,
-                                                                8,
-                                                                8,
-                                                                16
-                                                            ],
-                                                     "texture":  "#0"
-                                                 },
-                                       "south":  {
-                                                     "uv":  [
-                                                                8,
-                                                                0,
-                                                                16,
-                                                                8
-                                                            ],
-                                                     "texture":  "#0",
-                                                     "cullface":  "south"
-                                                 }
-                                   }
-                     },
-                     {
-                         "name":  "knob_left",
-                         "from":  [
-                                      2.5,
-                                      1.5,
-                                      -0.75
-                                  ],
-                         "to":  [
-                                    4.5,
-                                    3.5,
-                                    0
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                8,
-                                                                8,
-                                                                12,
-                                                                12
-                                                            ],
-                                                     "texture":  "#0"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               8,
-                                                               8,
-                                                               12,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "west":  {
-                                                    "uv":  [
-                                                               8,
-                                                               8,
-                                                               12,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "up":  {
-                                                  "uv":  [
-                                                             8,
-                                                             8,
-                                                             12,
-                                                             12
-                                                         ],
-                                                  "texture":  "#0"
-                                              },
-                                       "down":  {
-                                                    "uv":  [
-                                                               8,
-                                                               8,
-                                                               12,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                }
-                                   }
-                     },
-                     {
-                         "name":  "knob_right",
-                         "from":  [
-                                      5.5,
-                                      1.5,
-                                      -0.75
-                                  ],
-                         "to":  [
-                                    7.5,
-                                    3.5,
-                                    0
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                8,
-                                                                8,
-                                                                12,
-                                                                12
-                                                            ],
-                                                     "texture":  "#0"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               8,
-                                                               8,
-                                                               12,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "west":  {
-                                                    "uv":  [
-                                                               8,
-                                                               8,
-                                                               12,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "up":  {
-                                                  "uv":  [
-                                                             8,
-                                                             8,
-                                                             12,
-                                                             12
-                                                         ],
-                                                  "texture":  "#0"
-                                              },
-                                       "down":  {
-                                                    "uv":  [
-                                                               8,
-                                                               8,
-                                                               12,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                }
-                                   }
-                     },
-                     {
-                         "name":  "button_red_alarm",
-                         "from":  [
-                                      11.5,
-                                      3.5,
-                                      -0.4
-                                  ],
-                         "to":  [
-                                    13,
-                                    5,
-                                    0
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                12,
-                                                                8,
-                                                                14,
-                                                                10
-                                                            ],
-                                                     "texture":  "#0"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               12,
-                                                               8,
-                                                               14,
-                                                               10
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "west":  {
-                                                    "uv":  [
-                                                               12,
-                                                               8,
-                                                               14,
-                                                               10
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "up":  {
-                                                  "uv":  [
-                                                             12,
-                                                             8,
-                                                             14,
-                                                             10
-                                                         ],
-                                                  "texture":  "#0"
-                                              },
-                                       "down":  {
-                                                    "uv":  [
-                                                               12,
-                                                               8,
-                                                               14,
-                                                               10
-                                                           ],
-                                                    "texture":  "#0"
-                                                }
-                                   }
-                     },
-                     {
-                         "name":  "button_gray_mode",
-                         "from":  [
-                                      8.5,
-                                      1.5,
-                                      -0.4
-                                  ],
-                         "to":  [
-                                    10,
-                                    3,
-                                    0
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                14,
-                                                                8,
-                                                                16,
-                                                                10
-                                                            ],
-                                                     "texture":  "#0"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               14,
-                                                               8,
-                                                               16,
-                                                               10
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "west":  {
-                                                    "uv":  [
-                                                               14,
-                                                               8,
-                                                               16,
-                                                               10
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "up":  {
-                                                  "uv":  [
-                                                             14,
-                                                             8,
-                                                             16,
-                                                             10
-                                                         ],
-                                                  "texture":  "#0"
-                                              },
-                                       "down":  {
-                                                    "uv":  [
-                                                               14,
-                                                               8,
-                                                               16,
-                                                               10
-                                                           ],
-                                                    "texture":  "#0"
-                                                }
-                                   }
-                     },
-                     {
-                         "name":  "button_blue_flow",
-                         "from":  [
-                                      10.5,
-                                      1.5,
-                                      -0.4
-                                  ],
-                         "to":  [
-                                    12,
-                                    3,
-                                    0
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                12,
-                                                                10,
-                                                                14,
-                                                                12
-                                                            ],
-                                                     "texture":  "#0"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               12,
-                                                               10,
-                                                               14,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "west":  {
-                                                    "uv":  [
-                                                               12,
-                                                               10,
-                                                               14,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "up":  {
-                                                  "uv":  [
-                                                             12,
-                                                             10,
-                                                             14,
-                                                             12
-                                                         ],
-                                                  "texture":  "#0"
-                                              },
-                                       "down":  {
-                                                    "uv":  [
-                                                               12,
-                                                               10,
-                                                               14,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                }
-                                   }
-                     },
-                     {
-                         "name":  "button_green_ok",
-                         "from":  [
-                                      12.5,
-                                      1.5,
-                                      -0.4
-                                  ],
-                         "to":  [
-                                    14,
-                                    3,
-                                    0
-                                ],
-                         "faces":  {
-                                       "north":  {
-                                                     "uv":  [
-                                                                14,
-                                                                10,
-                                                                16,
-                                                                12
-                                                            ],
-                                                     "texture":  "#0"
-                                                 },
-                                       "east":  {
-                                                    "uv":  [
-                                                               14,
-                                                               10,
-                                                               16,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "west":  {
-                                                    "uv":  [
-                                                               14,
-                                                               10,
-                                                               16,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                },
-                                       "up":  {
-                                                  "uv":  [
-                                                             14,
-                                                             10,
-                                                             16,
-                                                             12
-                                                         ],
-                                                  "texture":  "#0"
-                                              },
-                                       "down":  {
-                                                    "uv":  [
-                                                               14,
-                                                               10,
-                                                               16,
-                                                               12
-                                                           ],
-                                                    "texture":  "#0"
-                                                }
-                                   }
-                     }
-                 ],
-    "display":  {
-                    "thirdperson_righthand":  {
-                                                  "rotation":  [
-                                                                   75,
-                                                                   45,
-                                                                   0
-                                                               ],
-                                                  "translation":  [
-                                                                      0,
-                                                                      2.5,
-                                                                      0
-                                                                  ],
-                                                  "scale":  [
-                                                                0.375,
-                                                                0.375,
-                                                                0.375
-                                                            ]
-                                              },
-                    "firstperson_righthand":  {
-                                                  "rotation":  [
-                                                                   0,
-                                                                   45,
-                                                                   0
-                                                               ],
-                                                  "scale":  [
-                                                                0.4,
-                                                                0.4,
-                                                                0.4
-                                                            ]
-                                              },
-                    "gui":  {
-                                "rotation":  [
-                                                 30,
-                                                 -135,
-                                                 0
-                                             ],
-                                "scale":  [
-                                              0.625,
-                                              0.625,
-                                              0.625
-                                          ]
-                            },
-                    "fixed":  {
-                                  "scale":  [
-                                                0.5,
-                                                0.5,
-                                                0.5
-                                            ]
-                              }
-                }
+  "credit": "Made with Blockbench",
+  "render_type": "minecraft:translucent",
+  "texture_size": [
+    32,
+    32
+  ],
+  "textures": {
+    "0": "hyperscale:block/datacenter_watercooling_controller_mc",
+    "1": "hyperscale:block/watercooler_screens",
+    "2": "hyperscale:block/watercooler_leds",
+    "particle": "hyperscale:block/datacenter_watercooling_controller_mc"
+  },
+  "elements": [
+    {
+      "name": "chassis_top",
+      "from": [
+        0,
+        14,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            0,
+            8,
+            1
+          ],
+          "texture": "#0",
+          "cullface": "north"
+        },
+        "east": {
+          "uv": [
+            8,
+            0,
+            16,
+            1
+          ],
+          "texture": "#0",
+          "cullface": "east"
+        },
+        "south": {
+          "uv": [
+            8,
+            0,
+            16,
+            1
+          ],
+          "texture": "#0",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            16,
+            1
+          ],
+          "texture": "#0",
+          "cullface": "west"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#0",
+          "cullface": "up"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "chassis_bottom",
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        6,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            5,
+            8,
+            8
+          ],
+          "texture": "#0",
+          "cullface": "north"
+        },
+        "east": {
+          "uv": [
+            8,
+            5,
+            16,
+            8
+          ],
+          "texture": "#0",
+          "cullface": "east"
+        },
+        "south": {
+          "uv": [
+            8,
+            5,
+            16,
+            8
+          ],
+          "texture": "#0",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            8,
+            5,
+            16,
+            8
+          ],
+          "texture": "#0",
+          "cullface": "west"
+        },
+        "up": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#0",
+          "cullface": "down"
+        }
+      }
+    },
+    {
+      "name": "chassis_right_status_column",
+      "from": [
+        11,
+        6,
+        0
+      ],
+      "to": [
+        16,
+        14,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            5.5,
+            1,
+            8,
+            5
+          ],
+          "texture": "#0",
+          "cullface": "north"
+        },
+        "east": {
+          "uv": [
+            8,
+            2.5,
+            16,
+            6.5
+          ],
+          "texture": "#0",
+          "cullface": "east"
+        },
+        "south": {
+          "uv": [
+            8.5,
+            0.5,
+            10.5,
+            2.5
+          ],
+          "texture": "#0",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            14,
+            1,
+            15,
+            5
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "thermal_lcd_screen",
+      "from": [
+        2,
+        6,
+        1
+      ],
+      "to": [
+        11,
+        14,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            0,
+            4,
+            8,
+            13.75
+          ],
+          "texture": "#1"
+        },
+        "east": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": "#1"
+        },
+        "south": {
+          "uv": [
+            8,
+            4,
+            16,
+            9
+          ],
+          "texture": "#1",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": "#1"
+        },
+        "up": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": "#1"
+        },
+        "down": {
+          "uv": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "texture": "#1"
+        }
+      }
+    },
+    {
+      "name": "knob_left",
+      "from": [
+        2.5,
+        1.5,
+        -0.75
+      ],
+      "to": [
+        4.5,
+        3.5,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "knob_right",
+      "from": [
+        5.5,
+        1.5,
+        -0.75
+      ],
+      "to": [
+        7.5,
+        3.5,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            8,
+            8,
+            12,
+            12
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "button_red_alarm",
+      "from": [
+        11.5,
+        3.5,
+        -0.4
+      ],
+      "to": [
+        13,
+        5,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            8,
+            14,
+            10
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            12,
+            8,
+            14,
+            10
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            12,
+            8,
+            14,
+            10
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            12,
+            8,
+            14,
+            10
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            12,
+            8,
+            14,
+            10
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "button_gray_mode",
+      "from": [
+        8.5,
+        1.5,
+        -0.4
+      ],
+      "to": [
+        10,
+        3,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            14,
+            8,
+            16,
+            10
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            14,
+            8,
+            16,
+            10
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            14,
+            8,
+            16,
+            10
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            14,
+            8,
+            16,
+            10
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            14,
+            8,
+            16,
+            10
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "button_blue_flow",
+      "from": [
+        10.5,
+        1.5,
+        -0.4
+      ],
+      "to": [
+        12,
+        3,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            10,
+            14,
+            12
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            12,
+            10,
+            14,
+            12
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            12,
+            10,
+            14,
+            12
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            12,
+            10,
+            14,
+            12
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            12,
+            10,
+            14,
+            12
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "button_green_ok",
+      "from": [
+        12.5,
+        1.5,
+        -0.4
+      ],
+      "to": [
+        14,
+        3,
+        0
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            14,
+            10,
+            16,
+            12
+          ],
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            14,
+            10,
+            16,
+            12
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            14,
+            10,
+            16,
+            12
+          ],
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            14,
+            10,
+            16,
+            12
+          ],
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            14,
+            10,
+            16,
+            12
+          ],
+          "texture": "#0"
+        }
+      }
+    },
+    {
+      "name": "chassis_left",
+      "from": [
+        0,
+        6,
+        0
+      ],
+      "to": [
+        2,
+        14,
+        16
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            5.5,
+            8,
+            7
+          ],
+          "texture": "#0",
+          "cullface": "north"
+        },
+        "east": {
+          "uv": [
+            7.5,
+            0,
+            16,
+            8
+          ],
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            13,
+            0,
+            15,
+            8
+          ],
+          "texture": "#0",
+          "cullface": "south"
+        },
+        "west": {
+          "uv": [
+            8,
+            0,
+            16,
+            8
+          ],
+          "texture": "#0",
+          "cullface": "west"
+        }
+      }
+    },
+    {
+      "name": "server_rack_leds",
+      "from": [
+        13.4,
+        11.4,
+        -0.2
+      ],
+      "to": [
+        13.65,
+        11.65,
+        0.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            9,
+            10.25,
+            8.75,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "east": {
+          "uv": [
+            8.75,
+            10.25,
+            9,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "south": {
+          "uv": [
+            8.75,
+            10.25,
+            9,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "west": {
+          "uv": [
+            8.75,
+            10.25,
+            9,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "up": {
+          "uv": [
+            8.75,
+            10.25,
+            9,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "down": {
+          "uv": [
+            8.75,
+            10.25,
+            9,
+            10.5
+          ],
+          "texture": "#2"
+        }
+      }
+    },
+    {
+      "name": "server_rack_leds",
+      "from": [
+        13.4,
+        13.4,
+        -0.2
+      ],
+      "to": [
+        13.65,
+        13.65,
+        0.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            10.5,
+            10.25,
+            10.25,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "east": {
+          "uv": [
+            10.25,
+            10.25,
+            10.5,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "south": {
+          "uv": [
+            10.25,
+            10.25,
+            10.5,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "west": {
+          "uv": [
+            10.25,
+            10.25,
+            10.5,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "up": {
+          "uv": [
+            10.25,
+            10.25,
+            10.5,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "down": {
+          "uv": [
+            10.25,
+            10.25,
+            10.5,
+            10.5
+          ],
+          "texture": "#2"
+        }
+      }
+    },
+    {
+      "name": "server_rack_leds",
+      "from": [
+        13.4,
+        7.4,
+        -0.2
+      ],
+      "to": [
+        13.65,
+        7.65,
+        0.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            10.25,
+            11.75,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "east": {
+          "uv": [
+            11.75,
+            10.25,
+            12,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "south": {
+          "uv": [
+            11.75,
+            10.25,
+            12,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "west": {
+          "uv": [
+            11.75,
+            10.25,
+            12,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "up": {
+          "uv": [
+            11.75,
+            10.25,
+            12,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "down": {
+          "uv": [
+            11.75,
+            10.25,
+            12,
+            10.5
+          ],
+          "texture": "#2"
+        }
+      }
+    },
+    {
+      "name": "server_rack_leds",
+      "from": [
+        13.4,
+        9.4,
+        -0.2
+      ],
+      "to": [
+        13.65,
+        9.65,
+        0.05
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            13.5,
+            10.25,
+            13.25,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "east": {
+          "uv": [
+            13.25,
+            10.25,
+            13.5,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "south": {
+          "uv": [
+            13.25,
+            10.25,
+            13.5,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "west": {
+          "uv": [
+            13.25,
+            10.25,
+            13.5,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "up": {
+          "uv": [
+            13.25,
+            10.25,
+            13.5,
+            10.5
+          ],
+          "texture": "#2"
+        },
+        "down": {
+          "uv": [
+            13.25,
+            10.25,
+            13.5,
+            10.5
+          ],
+          "texture": "#2"
+        }
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [
+        75,
+        45,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        0,
+        45,
+        0
+      ],
+      "scale": [
+        0.4,
+        0.4,
+        0.4
+      ]
+    },
+    "gui": {
+      "rotation": [
+        30,
+        -135,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "fixed": {
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
+  }
 }

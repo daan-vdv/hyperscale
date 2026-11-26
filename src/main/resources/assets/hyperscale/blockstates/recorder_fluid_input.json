@@ -1,26 +1,10 @@
 {
   "variants": {
-    "facing=down": {
-      "model": "hyperscale:block/recorder_input_up",
-      "x": 180
-    },
-    "facing=up": {
-      "model": "hyperscale:block/recorder_input_up"
-    },
-    "facing=north": {
-      "model": "hyperscale:block/recorder_input"
-    },
-    "facing=east": {
-      "model": "hyperscale:block/recorder_input",
-      "y": 90
-    },
-    "facing=south": {
-      "model": "hyperscale:block/recorder_input",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "hyperscale:block/recorder_input",
-      "y": 270
-    }
+    "facing=down":  { "model": "hyperscale:block/recorder_fluid_input", "x": 90 },
+    "facing=up":    { "model": "hyperscale:block/recorder_fluid_input", "x": 270 },
+    "facing=north": { "model": "hyperscale:block/recorder_fluid_input" },
+    "facing=east":  { "model": "hyperscale:block/recorder_fluid_input", "y": 90 },
+    "facing=south": { "model": "hyperscale:block/recorder_fluid_input", "y": 180 },
+    "facing=west":  { "model": "hyperscale:block/recorder_fluid_input", "y": 270 }
   }
 }
